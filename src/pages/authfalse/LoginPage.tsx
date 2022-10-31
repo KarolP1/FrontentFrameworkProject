@@ -108,11 +108,12 @@ const LoginPage = () => {
 export default LoginPage;
 
 export const Logo = () => {
+  const { width } = window.screen;
   return (
     <ThemeConsumer>
       {(theme) => (
         <LogoContainer>
-          <PhotoIcon size={100} color={theme.color.darkest} />
+          <PhotoIcon size={width / 10} color={theme.color.darkest} />
           <LogoTitle> PhotoChat </LogoTitle>
         </LogoContainer>
       )}

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
   LoginChildren,
+  LoginChildrenLeft,
   LoginContainer,
   StyledInputLogin,
   StyledInputLoginButton,
 } from "./Login.style";
 import loginimage from "../../../assets/loginimage.jpg";
+import "./style.css";
 
 export const LoginComponent = ({ children }: { children: React.ReactNode }) => {
   return (
     <LoginContainer>
-      <LoginChildren>
+      <LoginChildrenLeft>
         <div
           style={{
             display: "flex",
@@ -30,7 +32,7 @@ export const LoginComponent = ({ children }: { children: React.ReactNode }) => {
           With passion to photography
         </div>
         <img alt="imagehalfscreenphotography" src={loginimage} />
-      </LoginChildren>
+      </LoginChildrenLeft>
       <LoginChildren>{children}</LoginChildren>
     </LoginContainer>
   );

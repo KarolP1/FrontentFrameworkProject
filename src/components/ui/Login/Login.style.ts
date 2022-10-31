@@ -17,6 +17,31 @@ export const LoginChildren = styled.div`
   height: 100%;
   flex-direction: column;
 
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
+
+  img {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+  }
+`;
+export const LoginChildrenLeft = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+  max-width: 50%;
+  height: 100%;
+  flex-direction: column;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+
   img {
     flex: 1;
     width: 100%;
@@ -38,6 +63,7 @@ export const StyledInputLogin = styled.input<{ dark?: boolean }>`
     !props.dark ? props.theme.color.darkest : props.theme.color.dark};
   font-weight: 800;
   width: 100%;
+  max-width: 100vw;
 `;
 
 export const StyledInputLoginButton = styled.input<{ dark?: boolean }>`
@@ -74,13 +100,19 @@ export const FormContainer = styled.div`
 export const LogoTitle = styled.h2`
   font-size: 7rem;
   color: ${(props) => props.theme.color.darkest};
-  margin-left: 2rem;
+  @media (max-width: 768px) {
+    font-size: 3rem;
+  }
+  @media (max-width: 1000px) {
+    font-size: 5rem;
+  }
 `;
 
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
 `;
 
 export const ErrorMessageTxt = styled.p`
