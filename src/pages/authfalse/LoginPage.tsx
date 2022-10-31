@@ -107,14 +107,23 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-export const Logo = () => {
+export const Logo = ({
+  height,
+  align,
+}: {
+  height?: number;
+  align?: string | undefined;
+}) => {
   const { width } = window.screen;
   return (
     <ThemeConsumer>
       {(theme) => (
-        <LogoContainer>
-          <PhotoIcon size={width / 10} color={theme.color.darkest} />
-          <LogoTitle> PhotoChat </LogoTitle>
+        <LogoContainer align={align}>
+          <PhotoIcon
+            size={height ? height : width / 10}
+            color={theme.color.darkest}
+          />
+          <LogoTitle size={height && height}> PhotoChat </LogoTitle>
         </LogoContainer>
       )}
     </ThemeConsumer>
