@@ -57,6 +57,9 @@ export const LoginInput = ({
   useEffect(() => {
     setValueState(valueState);
   }, [valueState]);
+  useEffect(() => {
+    setValue && setValue(valueState);
+  }, [valueState, setValue]);
   return (
     <StyledInputLogin
       onClick={onPress}
@@ -69,6 +72,7 @@ export const LoginInput = ({
     />
   );
 };
+
 export const LoginInputButton = ({
   value,
   type,
