@@ -24,7 +24,7 @@ const LoginPage = () => {
   const [loginForm, setLoginForm] = useState<{
     email: string;
     password: string;
-  }>({ email: "", password: "" });
+  }>({ email: "Sincere@april.biz", password: "123456" });
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
