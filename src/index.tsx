@@ -8,8 +8,6 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { ThemeProvider } from "styled-components";
 import { colorTheme } from "./themes";
-import { ApiProvider } from "@reduxjs/toolkit/dist/query/react";
-import { userApi } from "./redux/api";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

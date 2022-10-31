@@ -1,5 +1,5 @@
-import React, { MouseEvent, useEffect, useState } from "react";
-import { ThemeConsumer, useTheme } from "styled-components";
+import { useEffect, useState } from "react";
+import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
 import Spinner from "../../components/ui/loading";
 import {
@@ -17,7 +17,6 @@ import {
 import { useGetUsersQuery } from "../../redux/api";
 import { useAppDispatch } from "../../redux/hooks";
 import { login, setLoggedInUser } from "../../redux/slices/login.slice";
-import { IColorThemeType } from "../../themes";
 import { ContainerMain } from "./LoginPage.styles";
 
 const LoginPage = () => {
