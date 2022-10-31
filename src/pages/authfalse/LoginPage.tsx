@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
 import Spinner from "../../components/ui/loading";
@@ -30,9 +30,6 @@ const LoginPage = () => {
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    console.log(loginForm);
-  }, [loginForm]);
   const onSubmit = () => {
     setErrorMessage(null);
     setIsLoadingLogin(true);
@@ -46,6 +43,7 @@ const LoginPage = () => {
           if (user.email === loginForm.email) {
             return user;
           }
+          return null;
         })[0];
         dispatch(login());
         if (loggedInUser) dispatch(setLoggedInUser(loggedInUser?.id));

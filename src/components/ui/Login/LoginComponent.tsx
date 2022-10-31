@@ -29,7 +29,7 @@ export const LoginComponent = ({ children }: { children: React.ReactNode }) => {
         >
           With passion to photography
         </div>
-        <img src={loginimage} />
+        <img alt="imagehalfscreenphotography" src={loginimage} />
       </LoginChildren>
       <LoginChildren>{children}</LoginChildren>
     </LoginContainer>
@@ -55,7 +55,7 @@ export const LoginInput = ({
 }) => {
   const [valueState, setValueState] = useState(value);
   useEffect(() => {
-    if (setValue) setValue(valueState);
+    setValueState(valueState);
   }, [valueState]);
   return (
     <StyledInputLogin
@@ -70,35 +70,22 @@ export const LoginInput = ({
   );
 };
 export const LoginInputButton = ({
-  placeholder,
   value,
-  setValue,
   type,
-  autoFocus,
   dark,
   onClick,
 }: {
   dark?: boolean;
   type?: string;
-  placeholder?: string;
   value: string;
-  setValue?: (text: string) => void;
-  autoFocus?: boolean;
   onClick?: () => void;
 }) => {
-  const [valueState, setValueState] = useState(value);
-  useEffect(() => {
-    if (setValue) setValue(valueState);
-  }, [valueState]);
   return (
     <StyledInputLoginButton
       onClick={onClick}
       dark={dark}
-      autoFocus={autoFocus ? autoFocus : false}
       type={typeof type === "string" ? type : ""}
-      placeholder={placeholder}
       value={value}
-      onChange={(event) => setValueState(event.target.value)}
     />
   );
 };

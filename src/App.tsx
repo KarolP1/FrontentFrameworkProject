@@ -18,7 +18,7 @@ function App() {
       dispatch(logout());
       navigation("/");
     }
-  }, [isSuccess]);
+  }, [isSuccess, navigation, dispatch]);
 
   return (
     <>
