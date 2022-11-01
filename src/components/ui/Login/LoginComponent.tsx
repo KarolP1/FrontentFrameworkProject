@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   LoginChildren,
   LoginChildrenLeft,
@@ -55,13 +55,6 @@ export const LoginInput = ({
   autoFocus?: boolean;
   onPress?: () => void;
 }) => {
-  const [valueState, setValueState] = useState(value);
-  useEffect(() => {
-    setValueState(valueState);
-  }, [valueState]);
-  useEffect(() => {
-    setValue && setValue(valueState);
-  }, [valueState, setValue]);
   return (
     <StyledInputLogin
       onClick={onPress}
@@ -70,7 +63,9 @@ export const LoginInput = ({
       type={typeof type === "string" ? type : ""}
       placeholder={placeholder}
       value={value}
-      onChange={(e) => setValueState(e.target.value)}
+      onChange={(e) => {
+        if (setValue) setValue(e.target.value);
+      }}
     />
   );
 };

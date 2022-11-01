@@ -17,7 +17,7 @@ const AppBar = () => {
           <>
             <BiLogOut
               className="icon"
-              color={theme.color.darkest}
+              color={theme.color.tint}
               size={30}
               onClick={() => dispatch(logout())}
             />

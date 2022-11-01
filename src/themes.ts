@@ -2,12 +2,12 @@ import { DefaultTheme } from "styled-components";
 
 export const colorTheme: DefaultTheme = {
   color: {
-    darkTint: "#2E0249",
-    darkest: "#C021B5",
-    dark: "#872673",
-    medium: "#D076B4",
-    tint: "#6D98BA",
-    lightest: "#FFFBFF",
+    darkTint: "#3F334D",
+    darkest: "#3F334D",
+    dark: "#574B60",
+    medium: "#9B8DA5",
+    tint: "#CEABB1",
+    lightest: "#F6F6F4",
   },
 };
 

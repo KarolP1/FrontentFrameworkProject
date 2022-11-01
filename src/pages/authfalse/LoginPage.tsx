@@ -19,7 +19,13 @@ import { useAppDispatch } from "../../redux/hooks";
 import { login, setLoggedInUser } from "../../redux/slices/login.slice";
 import { ContainerMain } from "./LoginPage.styles";
 
+export interface IUserWithImage {
+  userId: number;
+  image: string;
+}
+
 const LoginPage = () => {
+  const dispatch = useAppDispatch();
   const { data, isLoading } = useGetUsersQuery();
   const [loginForm, setLoginForm] = useState<{
     email: string;
@@ -28,7 +34,6 @@ const LoginPage = () => {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
 
   const onSubmit = () => {
     setErrorMessage(null);
@@ -121,7 +126,7 @@ export const Logo = ({
         <LogoContainer align={align}>
           <PhotoIcon
             size={height ? height : width / 10}
-            color={theme.color.darkest}
+            color={theme.color.tint}
           />
           <LogoTitle size={height && height}> PhotoChat </LogoTitle>
         </LogoContainer>
