@@ -3,7 +3,10 @@ import styled from "styled-components";
 export const SinglePostContainer = styled.div`
   flex: 1;
   display: flex;
-  padding: 1rem 10%;
+  margin: 1rem 10%;
+  height: 100%;
+  position: relative;
+  padding-bottom: 2rem;
 `;
 
 export const PostContext = styled.div`
@@ -18,6 +21,7 @@ export const PostContext = styled.div`
     width: 100%;
     aspect-ratio: 1;
   }
+  height: 100%;
 `;
 
 export const AllPostContainer = styled.div`
@@ -54,10 +58,19 @@ export const PostDescritpion = styled.p`
   font-size: 1.5rem;
   color: ${(props) => props.theme.color.tint};
   height: 50px;
+  flex: 1;
 
   mask: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
     rgba(255, 255, 255, 0) 95%
   );
+`;
+
+export const IconsContainer = styled.div`
+  position: absolute;
+  background-color: #4d4d4d01;
+  justify-content: flex-end;
+  display: flex;
+  padding: 1rem;
 `;
