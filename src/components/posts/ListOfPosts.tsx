@@ -10,6 +10,7 @@ const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
   const dispatch = useAppDispatch();
   const { UserQueryId } = useAppSelector((state) => state.Posts);
   const [postToDisplay, setPostToDisplay] = useState(posts);
+
   useEffect(() => {
     const postLikes = posts.map((post) => {
       return { postId: post.id, numberOfLikes: Math.random() * 1000 };

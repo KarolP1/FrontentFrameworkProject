@@ -28,6 +28,8 @@ const SinglePost = ({ post }: { post: IPost }) => {
   const [coments, setComents] = useState<IComent[] | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
 
+  const signedInUserId = sessionStorage.getItem("loggedInId");
+
   useEffect(() => {
     if (data) {
       const filteredComents = data.filter(
@@ -92,7 +94,7 @@ const SinglePost = ({ post }: { post: IPost }) => {
 
           <PostTitle>{post.title}</PostTitle>
           <PostUserLink to={`/profile/${user?.username}`}>
-            {user?.username}
+            {signedInUserId ? "Yours image" : user?.username}
           </PostUserLink>
           <PostDescritpion>{post.body}</PostDescritpion>
         </PostParts>

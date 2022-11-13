@@ -7,12 +7,15 @@ import "./style.css";
 import { useAppDispatch } from "../../../redux/hooks";
 import { logout } from "../../../redux/slices/login.slice";
 import SearchUser from "./SearchUser";
+import { Link } from "react-router-dom";
 
 const AppBar = () => {
   const dispatch = useAppDispatch();
   return (
     <AppbarContainer>
-      <Logo height={30} align={"flex-start"} />
+      <Link to="/">
+        <Logo height={30} align={"flex-start"} />
+      </Link>
       <SearchUser />
       <ThemeConsumer>
         {(theme) => (
