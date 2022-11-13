@@ -21,7 +21,17 @@ const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
       setIsVisibleMenu(false);
     }
   }, [userSearch, dispatch]);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsVisibleMenu(false);
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   useEffect(() => {
     if (userSearch.length === 0) {
       setUsersToDisplay(data);
