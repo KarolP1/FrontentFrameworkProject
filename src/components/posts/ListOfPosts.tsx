@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IPost } from "../../redux/api/types";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setPostLikes } from "../../redux/slices/Posts/Posts.slice";
 import SinglePost from "./SinglePost";
 import { AllPostContainer } from "./SinglePost.styled";
 
 const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
   const dispatch = useAppDispatch();
+  const { UserQueryId } = useAppSelector((state) => state.Posts);
+  const [postToDisplay, setPostToDisplay] = useState(posts);
 
   useEffect(() => {
     const postLikes = posts.map((post) => {
@@ -15,9 +17,18 @@ const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
     dispatch(setPostLikes(postLikes));
   }, [posts, dispatch]);
 
+  useEffect(() => {
+    if (UserQueryId) {
+      const filteredPosts = posts.filter((post) => post.userId === UserQueryId);
+      setPostToDisplay(filteredPosts);
+    } else {
+      setPostToDisplay(posts);
+    }
+  }, [UserQueryId, posts]);
+
   return (
     <AllPostContainer>
-      {posts.map((post) => {
+      {postToDisplay.map((post) => {
         return <SinglePost key={post.id} post={post} />;
       })}
     </AllPostContainer>

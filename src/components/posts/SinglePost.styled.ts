@@ -57,7 +57,7 @@ export const PostTitle = styled.p`
 export const PostDescritpion = styled.p`
   font-size: 1.5rem;
   color: ${(props) => props.theme.color.tint};
-  height: 50px;
+  max-height: 50px;
   flex: 1;
 
   mask: linear-gradient(

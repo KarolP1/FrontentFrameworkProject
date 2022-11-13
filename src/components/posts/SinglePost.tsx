@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllCommentsQuery } from "../../redux/api";
-import { IComent, IPost } from "../../redux/api/types";
+import { useGetAllCommentsQuery, useGetUsersQuery } from "../../redux/api";
+import { IComent, IPost, IUser } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { increment } from "../../redux/slices/Posts/Posts.slice";
 import {
@@ -23,7 +23,9 @@ const SinglePost = ({ post }: { post: IPost }) => {
     (state) => state.Posts
   );
   const { data } = useGetAllCommentsQuery();
+  const usersData = useGetUsersQuery();
   const [coments, setComents] = useState<IComent[] | null>(null);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
     if (data) {
@@ -32,11 +34,13 @@ const SinglePost = ({ post }: { post: IPost }) => {
       );
       setComents(filteredComents);
     }
-  }, [data, post.id]);
-
-  useEffect(() => {
-    console.log(coments?.length);
-  }, [coments]);
+    if (usersData.data) {
+      const singleUser = usersData.data.filter(
+        (user) => user.id === post.userId
+      )[0];
+      setUser(singleUser);
+    }
+  }, [data, post.id, usersData.data, post.userId]);
 
   const postNumberOfLikes = numberOfLikes?.filter(
     (i) => i.postId === post.id
@@ -86,6 +90,7 @@ const SinglePost = ({ post }: { post: IPost }) => {
           </AllIconContainer>
 
           <PostTitle>{post.title}</PostTitle>
+          <PostDescritpion>{user?.username}</PostDescritpion>
           <PostDescritpion>{post.body}</PostDescritpion>
         </PostParts>
       </PostContext>

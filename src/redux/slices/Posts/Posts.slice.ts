@@ -9,6 +9,7 @@ interface IIPostSlice {
         numberOfLikes: number;
       }[]
     | null;
+  UserQueryId?: number | null;
 }
 
 const initialState: IIPostSlice = {
@@ -62,7 +63,13 @@ export const PostSlice = createSlice({
     ) => {
       state.numberOfLikes = payload;
     },
+    setUserQueryId: (
+      state,
+      { payload }: PayloadAction<{ id: number | null }>
+    ) => {
+      state.UserQueryId = payload.id;
+    },
   },
 });
 
-export const { increment, setPostLikes } = PostSlice.actions;
+export const { increment, setPostLikes, setUserQueryId } = PostSlice.actions;
