@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SearchContainer = styled.div`
+export const SearchContainer = styled.div<{ isMoblie?: boolean }>`
   width: 100%;
   display: flex;
   height: 100%;
@@ -11,8 +11,11 @@ export const SearchContainer = styled.div`
   align-items: center;
   padding: 0 2rem;
 
-  @media (max-width: 550px) {
-    display: none;
+  @media (max-width: 768px) {
+    display: ${(props) => (props.isMoblie ? "block ruby" : "none")};
+  }
+  @media (min-width: 768px) {
+    display: ${(props) => (!props.isMoblie ? "block ruby" : "none")};
   }
 
   input {
@@ -40,4 +43,18 @@ export const DisplayNames = styled.div<{ isVisible: boolean }>`
   border-radius: 1rem;
   margin-top: 0.5rem;
   padding: 1rem;
+  top: 20px;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  width: 25%;
+
+  @media (max-width: 768px) {
+    width: 80%;
+    align-self: center;
+  }
 `;

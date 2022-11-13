@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { DisplayNames, SearchContainer } from "./SearchUser.styled";
+import { Container, DisplayNames, SearchContainer } from "./SearchUser.styled";
 import { BiSearchAlt } from "react-icons/bi";
 import { ThemeConsumer } from "styled-components";
 import { useGetUsersQuery } from "../../../redux/api";
 import { setUserQueryId } from "../../../redux/slices/Posts/Posts.slice";
 import { useAppDispatch } from "../../../redux/hooks";
 
-const SearchUser = () => {
+const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
   const dispatch = useAppDispatch();
   const [userSearch, setUserSearch] = useState("");
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
@@ -37,8 +37,9 @@ const SearchUser = () => {
   }, [data, userSearch]);
 
   return (
-    <div style={{ position: "relative", zIndex: 10, width: "25%" }}>
+    <Container>
       <SearchContainer
+        isMoblie={isMoblie}
         onClick={() => {
           setIsVisibleMenu(true);
         }}
@@ -70,7 +71,7 @@ const SearchUser = () => {
           </div>
         ))}
       </DisplayNames>
-    </div>
+    </Container>
   );
 };
 

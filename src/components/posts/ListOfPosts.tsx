@@ -27,12 +27,14 @@ const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
   }, [UserQueryId, posts]);
 
   return (
-    <AllPostContainer>
-      <SearchUser />
-      {postToDisplay.map((post) => {
-        return <SinglePost key={post.id} post={post} />;
-      })}
-    </AllPostContainer>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <SearchUser isMoblie={true} />
+      <AllPostContainer>
+        {postToDisplay.map((post) => {
+          return <SinglePost key={post.id} post={post} />;
+        })}
+      </AllPostContainer>
+    </div>
   );
 };
 
