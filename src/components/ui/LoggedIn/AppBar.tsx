@@ -12,7 +12,7 @@ const AppBar = () => {
   const dispatch = useAppDispatch();
   return (
     <AppbarContainer>
-      <Logo height={40} align={"flex-start"} />
+      <Logo height={30} align={"flex-start"} />
       <SearchUser />
       <ThemeConsumer>
         {(theme) => (

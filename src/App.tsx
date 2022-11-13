@@ -1,19 +1,31 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/authtrue/homepage";
-import { useAppSelector } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import LoginPage from "./pages/authfalse/LoginPage";
 import ProfilePage from "./pages/authtrue/Profile";
 import NotFound from "./pages/authtrue/NotFound";
+import { useEffect } from "react";
+import { login, setLoggedInUser } from "./redux/slices/login.slice";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
+  const dispatch = useAppDispatch();
+  const loginState = sessionStorage.getItem("loggedInId");
+
+  useEffect(() => {
+    console.log(loginState);
+    if (loginState) {
+      dispatch(login());
+      dispatch(setLoggedInUser(parseInt(loginState)));
+    }
+  }, [loginState, dispatch]);
 
   return (
     <>
       {isLoggedIn ? (
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:userName" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       ) : (

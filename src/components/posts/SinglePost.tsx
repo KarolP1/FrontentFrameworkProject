@@ -13,6 +13,7 @@ import {
   SingleIconContainer,
   IconWithText,
   AllIconContainer,
+  PostUserLink,
 } from "./SinglePost.styled";
 import comentIcon from "../../assets/icons/message.svg";
 
@@ -90,7 +91,9 @@ const SinglePost = ({ post }: { post: IPost }) => {
           </AllIconContainer>
 
           <PostTitle>{post.title}</PostTitle>
-          <PostDescritpion>{user?.username}</PostDescritpion>
+          <PostUserLink to={`/profile/${user?.username}`}>
+            {user?.username}
+          </PostUserLink>
           <PostDescritpion>{post.body}</PostDescritpion>
         </PostParts>
       </PostContext>

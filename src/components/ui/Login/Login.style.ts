@@ -98,13 +98,13 @@ export const FormContainer = styled.div`
 `;
 
 export const LogoTitle = styled.h2<{ size?: number }>`
-  font-size: ${(props) => (props.size ? props.size : "7rem")};
+  font-size: 2rem;
   color: ${(props) => props.theme.color.tint};
-  @media (max-width: 768px) {
-    font-size: 3rem;
-  }
   @media (max-width: 1000px) {
     font-size: 5rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 3rem;
   }
 `;
 

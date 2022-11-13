@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
 import Spinner from "../../components/ui/loading";
@@ -34,6 +34,15 @@ const LoginPage = () => {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+  const loginState = sessionStorage.getItem("loggedInId");
+
+  useEffect(() => {
+    console.log(loginState);
+    if (loginState) {
+      dispatch(login());
+      dispatch(setLoggedInUser(parseInt(loginState)));
+    }
+  }, [loginState, dispatch]);
 
   const onSubmit = () => {
     setErrorMessage(null);
@@ -46,6 +55,7 @@ const LoginPage = () => {
       } else {
         const loggedInUser = data?.filter((user) => {
           if (user.email === loginForm.email) {
+            sessionStorage.setItem("loggedInId", user.id.toString());
             return user;
           }
           return null;
@@ -69,7 +79,7 @@ const LoginPage = () => {
                 <Spinner />
               ) : (
                 <>
-                  <Logo />
+                  <Logo height={40} />
                   <FormContainer>
                     <LoginInput
                       autoFocus
@@ -116,19 +126,15 @@ export const Logo = ({
   height,
   align,
 }: {
-  height?: number;
+  height: number;
   align?: string | undefined;
 }) => {
-  const { width } = window.screen;
   return (
     <ThemeConsumer>
       {(theme) => (
         <LogoContainer align={align}>
-          <PhotoIcon
-            size={height ? height : width / 10}
-            color={theme.color.tint}
-          />
-          <LogoTitle size={height && height}> PhotoChat </LogoTitle>
+          <PhotoIcon size={height} color={theme.color.tint} />
+          <LogoTitle size={height}> PhotoChat </LogoTitle>
         </LogoContainer>
       )}
     </ThemeConsumer>

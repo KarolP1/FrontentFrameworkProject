@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const SinglePostContainer = styled.div`
@@ -55,6 +56,18 @@ export const PostTitle = styled.p`
 `;
 
 export const PostDescritpion = styled.p`
+  font-size: 1.5rem;
+  color: ${(props) => props.theme.color.tint};
+  max-height: 50px;
+  flex: 1;
+
+  mask: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 95%
+  );
+`;
+export const PostUserLink = styled(Link)`
   font-size: 1.5rem;
   color: ${(props) => props.theme.color.tint};
   max-height: 50px;
