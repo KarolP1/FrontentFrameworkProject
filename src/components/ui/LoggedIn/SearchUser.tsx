@@ -20,16 +20,17 @@ const SearchUser = () => {
       dispatch(setUserQueryId({ id: null }));
       setIsVisibleMenu(false);
     }
-  }, [userSearch]);
+  }, [userSearch, dispatch]);
 
   useEffect(() => {
-    if (userSearch.length == 0) {
+    if (userSearch.length === 0) {
       setUsersToDisplay(data);
     } else {
       const filter = data?.filter((user) => {
         if (user.username.toLowerCase().includes(userSearch.toLowerCase())) {
           return true;
         }
+        return false;
       });
       setUsersToDisplay(filter);
     }
