@@ -11,6 +11,10 @@ export const SearchContainer = styled.div`
   align-items: center;
   padding: 0 2rem;
 
+  @media (max-width: 550px) {
+    display: none;
+  }
+
   input {
     background-color: transparent;
     flex: 1;
