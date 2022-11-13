@@ -69,8 +69,28 @@ export const PostDescritpion = styled.p`
 
 export const IconsContainer = styled.div`
   position: absolute;
-  background-color: #4d4d4d01;
   justify-content: flex-end;
   display: flex;
   padding: 1rem;
+`;
+export const SingleIconContainer = styled.div`
+  height: 2rem;
+  margin-right: 0.4rem;
+`;
+
+export const IconWithText = styled.div`
+  display: flex;
+  flex-direction: "row";
+  background-color: #ffffff15;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+  align-self: flex-start;
+`;
+
+export const AllIconContainer = styled.div`
+  flex-direction: row;
+  justify-content: space-around;
+  display: flex;
 `;

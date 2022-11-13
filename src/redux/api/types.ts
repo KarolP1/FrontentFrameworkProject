@@ -29,4 +29,13 @@ export interface IPost {
   title: string;
   body: string;
   user?: IUser;
+  coments?: IComent[];
+}
+
+export interface IComent {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
 }

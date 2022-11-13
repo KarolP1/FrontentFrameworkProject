@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { IPost } from "../../redux/api/types";
 import { useAppDispatch } from "../../redux/hooks";
 import { setPostLikes } from "../../redux/slices/Posts/Posts.slice";
@@ -6,15 +7,17 @@ import { AllPostContainer } from "./SinglePost.styled";
 
 const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const postLikes = posts.map((post) => {
+      return { postId: post.id, numberOfLikes: Math.random() * 1000 };
+    });
+    dispatch(setPostLikes(postLikes));
+  }, [posts, dispatch]);
+
   return (
     <AllPostContainer>
       {posts.map((post) => {
-        dispatch(
-          setPostLikes({
-            postid: post.id,
-            numberOfLikes: Math.random() * 1000,
-          })
-        );
         return <SinglePost key={post.id} post={post} />;
       })}
     </AllPostContainer>

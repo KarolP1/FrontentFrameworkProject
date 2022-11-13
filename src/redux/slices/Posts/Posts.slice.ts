@@ -51,15 +51,16 @@ export const PostSlice = createSlice({
     },
     setPostLikes: (
       state,
-      { payload }: PayloadAction<{ postid: number; numberOfLikes: number }>
+      {
+        payload,
+      }: PayloadAction<
+        {
+          postId: number;
+          numberOfLikes: number;
+        }[]
+      >
     ) => {
-      const newItemInState = {
-        postId: payload.postid,
-        numberOfLikes: payload.numberOfLikes,
-      };
-      state.numberOfLikes
-        ? state.numberOfLikes.push(newItemInState)
-        : (state.numberOfLikes = [newItemInState]);
+      state.numberOfLikes = payload;
     },
   },
 });
