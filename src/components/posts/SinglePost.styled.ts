@@ -82,9 +82,19 @@ export const PostUserLink = styled(Link)`
 
 export const IconsContainer = styled.div`
   position: absolute;
+  justify-content: space-between;
+  display: flex;
+  padding: 1rem;
+  width: 100%;
+`;
+export const IconsContainerRight = styled.div`
+  position: absolute;
   justify-content: flex-end;
   display: flex;
   padding: 1rem;
+  background-color: #fff;
+  right: 0;
+  z-index: 10;
 `;
 export const SingleIconContainer = styled.div`
   height: 2rem;
