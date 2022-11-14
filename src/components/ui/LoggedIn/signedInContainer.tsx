@@ -2,10 +2,16 @@ import React from "react";
 import AppBar from "./AppBar";
 import { LoggedInContainer, ScrollContainer } from "./signedInContainer.styled";
 
-const SignedInContainer = ({ children }: { children: React.ReactNode }) => {
+const SignedInContainer = ({
+  children,
+  type,
+}: {
+  children: React.ReactNode;
+  type?: "Profile";
+}) => {
   return (
     <LoggedInContainer>
-      <AppBar />
+      <AppBar type={type} />
       <ScrollContainer>{children}</ScrollContainer>
     </LoggedInContainer>
   );

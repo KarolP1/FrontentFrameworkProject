@@ -9,14 +9,14 @@ import { logout } from "../../../redux/slices/login.slice";
 import SearchUser from "./SearchUser";
 import { Link } from "react-router-dom";
 
-const AppBar = () => {
+const AppBar = ({ type }: { type?: "Profile" }) => {
   const dispatch = useAppDispatch();
   return (
     <AppbarContainer>
       <Link to="/">
         <Logo height={30} align={"flex-start"} />
       </Link>
-      <SearchUser />
+      <SearchUser type={type} />
       <ThemeConsumer>
         {(theme) => (
           <>

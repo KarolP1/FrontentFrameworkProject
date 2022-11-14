@@ -31,7 +31,7 @@ const ProfilePage = () => {
   }, [posts, user?.id]);
 
   return (
-    <SignedInContainer>
+    <SignedInContainer type="Profile">
       <div
         style={{
           width: "100%",
@@ -44,7 +44,7 @@ const ProfilePage = () => {
         {user && (
           <div>
             <UserProfileSection user={user} />
-            {userPosts && <ListOfPosts posts={userPosts} />}
+            {userPosts && <ListOfPosts posts={userPosts} type={"profile"} />}
           </div>
         )}
       </div>

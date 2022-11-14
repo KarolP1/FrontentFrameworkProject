@@ -6,7 +6,7 @@ import SearchUser from "../ui/LoggedIn/SearchUser";
 import SinglePost from "./SinglePost";
 import { AllPostContainer } from "./SinglePost.styled";
 
-const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
+const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
   const dispatch = useAppDispatch();
   const { UserQueryId } = useAppSelector((state) => state.Posts);
   const [postToDisplay, setPostToDisplay] = useState(posts);
@@ -29,7 +29,7 @@ const ListOfPosts = ({ posts }: { posts: IPost[] }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <SearchUser isMoblie={true} />
+      {type !== "profile" && <SearchUser isMoblie={true} type={type} />}
       <AllPostContainer>
         {postToDisplay.map((post) => {
           return <SinglePost key={post.id} post={post} />;

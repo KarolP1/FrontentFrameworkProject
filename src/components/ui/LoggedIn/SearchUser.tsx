@@ -5,8 +5,17 @@ import { ThemeConsumer } from "styled-components";
 import { useGetUsersQuery } from "../../../redux/api";
 import { setUserQueryId } from "../../../redux/slices/Posts/Posts.slice";
 import { useAppDispatch } from "../../../redux/hooks";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
+import { useNavigate } from "react-router-dom";
 
-const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
+const SearchUser = ({
+  isMoblie,
+  type,
+}: {
+  isMoblie?: boolean;
+  type?: "Profile";
+}) => {
+  const navigation = useNavigate();
   const dispatch = useAppDispatch();
   const [userSearch, setUserSearch] = useState("");
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
@@ -21,6 +30,7 @@ const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
       setIsVisibleMenu(false);
     }
   }, [userSearch, dispatch]);
+
   useEffect(() => {
     const handleResize = () => {
       setIsVisibleMenu(false);
@@ -32,6 +42,7 @@ const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   useEffect(() => {
     if (userSearch.length === 0) {
       setUsersToDisplay(data);
@@ -46,9 +57,12 @@ const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
     }
   }, [data, userSearch]);
 
+  const ref = useOutsideClick(() => setIsVisibleMenu(false));
+
   return (
     <Container>
       <SearchContainer
+        ref={ref}
         isMoblie={isMoblie}
         onClick={() => {
           setIsVisibleMenu(true);
@@ -72,9 +86,14 @@ const SearchUser = ({ isMoblie }: { isMoblie?: boolean }) => {
           <div
             key={user.id}
             onClick={() => {
-              setUserSearch(user.username);
-              setIsVisibleMenu(false);
-              dispatch(setUserQueryId({ id: user.id }));
+              if (type === "Profile") {
+                navigation(`/profile/${user.username}`);
+                setUserSearch("");
+              } else {
+                setUserSearch(user.username);
+                setIsVisibleMenu(false);
+                dispatch(setUserQueryId({ id: user.id }));
+              }
             }}
           >
             {user.username}
