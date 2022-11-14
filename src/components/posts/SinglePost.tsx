@@ -94,7 +94,9 @@ const SinglePost = ({ post }: { post: IPost }) => {
 
           <PostTitle>{post.title}</PostTitle>
           <PostUserLink to={`/profile/${user?.username}`}>
-            {signedInUserId ? "Yours image" : user?.username}
+            {signedInUserId && parseInt(signedInUserId) === post.userId
+              ? "Your's image"
+              : user?.username}
           </PostUserLink>
           <PostDescritpion>{post.body}</PostDescritpion>
         </PostParts>
