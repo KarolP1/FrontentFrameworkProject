@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetAllCommentsQuery } from "../../redux/api";
 import { IComent, IPost } from "../../redux/api/types";
-import { useAppSelector } from "../../redux/hooks";
 import CommentSection from "./CommentSection";
 import SingleComent from "./SingleComent";
 import {
@@ -28,6 +27,7 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
     <PostContainer>
       <div style={{ display: "flex", flex: 1 }}>
         <img
+          alt={`large post  ${post.id}`}
           src={`https://picsum.photos/id/${post.id}/3000/3000`}
           style={{ height: "100%", width: "100%", objectFit: "cover" }}
         />

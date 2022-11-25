@@ -1,5 +1,4 @@
 import React from "react";
-import { IComent } from "../../redux/api/types";
 
 const CommentSection = ({
   postId,

@@ -1,5 +1,4 @@
 import React from "react";
-import { useGetUsersQuery } from "../../redux/api";
 import { IComent } from "../../redux/api/types";
 import {
   ComentContainer,
@@ -10,11 +9,6 @@ import {
 type Props = { coment: IComent };
 
 const SingleComent = (props: Props) => {
-  const { data } = useGetUsersQuery();
-  const singleUser = data?.filter((user) => {
-    console.log(user.email);
-    return user.email === props.coment.email;
-  })[0];
   return (
     <ComentContainer>
       <ProfileImage
