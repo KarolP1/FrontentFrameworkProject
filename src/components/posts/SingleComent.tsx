@@ -18,7 +18,6 @@ const SingleComent = (props: Props) => {
       />
       <ComentContent>
         <p>{props.coment.email}</p>
-        <p>{props.coment.name}</p>
         <p>{props.coment.body}</p>
       </ComentContent>
     </ComentContainer>

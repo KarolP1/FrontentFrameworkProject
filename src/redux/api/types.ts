@@ -39,3 +39,8 @@ export interface IComent {
   email: string;
   body: string;
 }
+
+export interface IPostNewComent {
+  coment: Partial<IComent>;
+  postId: number;
+}

@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IComent, IPost, IUser } from "./types";
+import { IComent, IPost, IPostNewComent, IUser } from "./types";
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -15,8 +16,23 @@ export const userApi = createApi({
     getAllComments: builder.query<IComent[], void>({
       query: () => `/comments/`,
     }),
+
+    createComent: builder.mutation<IComent, IPostNewComent>({
+      query(state) {
+        return {
+          url: `/comments?postId=${state.postId}`,
+          method: "POST",
+          credentials: "include",
+          body: state.coment,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useGetAllPostsQuery, useGetAllCommentsQuery } =
-  userApi;
+export const {
+  useGetUsersQuery,
+  useGetAllPostsQuery,
+  useGetAllCommentsQuery,
+  useCreateComentMutation,
+} = userApi;
