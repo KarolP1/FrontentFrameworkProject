@@ -27,6 +27,13 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
     }
   }, [data, post.id, post.userId]);
 
+  useEffect(() => {
+    if (newComent) {
+      coments?.push({ ...newComent, id: coments.length + 1 });
+    }
+    setNewComent(null);
+  }, [newComent, coments]);
+
   return (
     <PostContainer>
       <div style={{ display: "flex", flex: 1 }}>
@@ -50,9 +57,9 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
             ) : (
               <div>Be first who leaved a coment.</div>
             )}
-            {newComent && (
+            {/* {newComent && (
               <SingleComent key={newComent.id} coment={newComent} />
-            )}
+            )} */}
           </CommentSection>
         )}
         <AddComentSection
