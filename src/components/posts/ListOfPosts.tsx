@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IPost } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setPostLikes } from "../../redux/slices/Posts/Posts.slice";
@@ -10,6 +11,7 @@ const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
   const dispatch = useAppDispatch();
   const { UserQueryId } = useAppSelector((state) => state.Posts);
   const [postToDisplay, setPostToDisplay] = useState(posts);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const postLikes = posts.map((post) => {
@@ -32,7 +34,15 @@ const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
       {type !== "profile" && <SearchUser isMoblie={true} type={type} />}
       <AllPostContainer>
         {postToDisplay.map((post) => {
-          return <SinglePost key={post.id} post={post} />;
+          return (
+            <SinglePost
+              post={post}
+              key={post.id}
+              onClick={() => {
+                navigate(`/image/view/${post.id}`);
+              }}
+            />
+          );
         })}
       </AllPostContainer>
     </div>

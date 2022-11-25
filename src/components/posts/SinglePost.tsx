@@ -19,7 +19,13 @@ import {
 } from "./SinglePost.styled";
 import comentIcon from "../../assets/icons/message.svg";
 
-const SinglePost = ({ post }: { post: IPost }) => {
+const SinglePost = ({
+  post,
+  onClick,
+}: {
+  post: IPost;
+  onClick: () => void;
+}) => {
   const dispatch = useAppDispatch();
   const loggedInUser = sessionStorage.getItem("loggedInId");
   const isYourPost = loggedInUser && parseInt(loggedInUser) === post.userId;
@@ -59,7 +65,7 @@ const SinglePost = ({ post }: { post: IPost }) => {
   }, [idsOfLikedPosts, post.id]);
   return (
     <SinglePostContainer>
-      <PostContext>
+      <PostContext onClick={onClick}>
         <img
           alt="randomimagetopost"
           src={`https://picsum.photos/id/${post.id}/300/300`}

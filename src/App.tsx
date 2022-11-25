@@ -6,6 +6,7 @@ import ProfilePage from "./pages/authtrue/Profile";
 import NotFound from "./pages/authtrue/NotFound";
 import { useEffect } from "react";
 import { login, setLoggedInUser } from "./redux/slices/login.slice";
+import SingleImage from "./pages/authtrue/singleImage";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
@@ -26,6 +27,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/profile/:userName" element={<ProfilePage />} />
+          <Route path="/image/view/:imageId" element={<SingleImage />} />
+          <Route path="/image/edit/:imageId" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       ) : (
