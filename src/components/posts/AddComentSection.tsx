@@ -20,12 +20,10 @@ const AddComentSection = (props: Props) => {
     if (data) {
       props.setNewComent(data);
     }
-  }, [data]);
+  }, [data, props]);
   useEffect(() => {
-    if (data) {
-      props.setIsLoading(isLoading);
-    }
-  }, [isLoading]);
+    props.setIsLoading(isLoading);
+  }, [isLoading, props]);
   const userId = useAppSelector((state) => state.login.userId);
   const user = useGetUsersQuery();
   const loggedInUser = user.data?.filter((user) => user.id === userId)[0];
