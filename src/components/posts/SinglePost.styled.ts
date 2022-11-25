@@ -117,3 +117,35 @@ export const AllIconContainer = styled.div`
   justify-content: space-around;
   display: flex;
 `;
+
+export const IconMoreOptions = styled.div<{ active: boolean }>`
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff15;
+  border-radius: 100px;
+  padding: 0.5rem;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  transition: rotate 500ms;
+
+  rotate: ${(props) => (props.active ? "3600deg" : "0deg")};
+`;
+export const MoreIconsDisplay = styled.div<{ active: boolean }>`
+  display: flex;
+  flex-direction: column;
+  width: 30px;
+  border-radius: 100px;
+  padding: 0.5rem;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  transition: height 500ms;
+
+  div {
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    padding: 0.5rem;
+    height: ${(props) => (props.active ? "30px" : "0px")};
+    display: ${(props) => (props.active ? "flex" : "none")};
+  }
+`;

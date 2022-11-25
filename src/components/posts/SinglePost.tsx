@@ -3,8 +3,8 @@ import { useGetAllCommentsQuery, useGetUsersQuery } from "../../redux/api";
 import { IComent, IPost, IUser } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { increment } from "../../redux/slices/Posts/Posts.slice";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { BiEditAlt } from "react-icons/bi";
+import { BsHeart, BsHeartFill, BsThreeDotsVertical } from "react-icons/bs";
+import { RiDeleteBin3Line } from "react-icons/ri";
 import {
   PostContext,
   SinglePostContainer,
@@ -16,15 +16,19 @@ import {
   IconWithText,
   AllIconContainer,
   PostUserLink,
+  IconMoreOptions,
+  MoreIconsDisplay,
 } from "./SinglePost.styled";
 import comentIcon from "../../assets/icons/message.svg";
 
 const SinglePost = ({
   post,
   onClick,
+  DeleteAction,
 }: {
   post: IPost;
   onClick: () => void;
+  DeleteAction: (postId: number) => void;
 }) => {
   const dispatch = useAppDispatch();
   const loggedInUser = sessionStorage.getItem("loggedInId");
@@ -59,6 +63,10 @@ const SinglePost = ({
     (i) => i.postId === post.id
   )[0];
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [animatedBool, setanimatedBool] = useState<boolean>(false);
+  const imageSource = `https://picsum.photos/id/${Math.floor(
+    Math.random() * 100
+  )}/300/300`;
   useEffect(() => {
     if (idsOfLikedPosts?.includes(post.id)) setIsLiked(true);
     else setIsLiked(false);
@@ -66,10 +74,7 @@ const SinglePost = ({
   return (
     <SinglePostContainer>
       <PostContext onClick={onClick}>
-        <img
-          alt="randomimagetopost"
-          src={`https://picsum.photos/id/${post.id}/300/300`}
-        />
+        <img alt="randomimagetopost" src={imageSource} />
         <PostParts>
           <AllIconContainer>
             <IconWithText>
@@ -129,16 +134,26 @@ const SinglePost = ({
           )}
         </div>
         {isYourPost && (
-          <div
-            style={{
-              width: 30,
-              height: 30,
-              backgroundColor: "#ffffff15",
-              borderRadius: 100,
-              padding: ".5rem",
-            }}
-          >
-            <BiEditAlt color="#fff" size={20} />
+          <div style={{ flexDirection: "column", display: "flex" }}>
+            <IconMoreOptions
+              active={animatedBool}
+              onClick={() => {
+                setanimatedBool(!animatedBool);
+              }}
+            >
+              <BsThreeDotsVertical color="#fff" size={20} />
+            </IconMoreOptions>
+            <MoreIconsDisplay active={animatedBool}>
+              <div onClick={() => DeleteAction(post.id)}>
+                <RiDeleteBin3Line color="#fff" size={20} />
+              </div>
+              <div>
+                <BsThreeDotsVertical color="#fff" size={20} />
+              </div>
+              <div>
+                <BsThreeDotsVertical color="#fff" size={20} />
+              </div>
+            </MoreIconsDisplay>
           </div>
         )}
       </IconsContainer>

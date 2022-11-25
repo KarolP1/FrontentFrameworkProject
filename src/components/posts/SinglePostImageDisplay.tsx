@@ -29,7 +29,12 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
 
   useEffect(() => {
     if (newComent) {
-      coments?.push({ ...newComent, id: coments.length + 1 });
+      const newComentToPush = {
+        ...newComent,
+        id: Math.floor(Math.random() * 10000),
+      }; //random image starting from 1000 to avoid collisions
+      console.log(newComentToPush);
+      coments?.push(newComentToPush);
     }
     setNewComent(null);
   }, [newComent, coments]);
@@ -57,9 +62,6 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
             ) : (
               <div>Be first who leaved a coment.</div>
             )}
-            {/* {newComent && (
-              <SingleComent key={newComent.id} coment={newComent} />
-            )} */}
           </CommentSection>
         )}
         <AddComentSection

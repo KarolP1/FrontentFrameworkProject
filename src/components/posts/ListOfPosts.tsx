@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IPost } from "../../redux/api/types";
@@ -36,6 +37,12 @@ const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
         {postToDisplay.map((post) => {
           return (
             <SinglePost
+              DeleteAction={() => {
+                const newPosts = posts.filter(
+                  (posttodelete) => post.id !== posttodelete.id
+                );
+                setPostToDisplay(newPosts);
+              }}
               post={post}
               key={post.id}
               onClick={() => {
