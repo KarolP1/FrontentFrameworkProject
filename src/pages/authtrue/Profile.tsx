@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ListOfPosts from "../../components/posts/ListOfPosts";
+import ImageAlbumMenu from "../../components/profile/ImageAlbumMenu";
 import UserProfileSection from "../../components/profile/UserProfileSection";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
 import { IPost, IUser } from "../../redux/api/types";
@@ -29,6 +30,8 @@ const ProfilePage = () => {
     }
   }, [posts, user?.id]);
 
+  const [isPostsOnDisplay, setisPostsOnDisplay] = useState(true);
+
   return (
     <SignedInContainer type="Profile">
       <div
@@ -41,9 +44,20 @@ const ProfilePage = () => {
       >
         {!user && <p>User not found</p>}
         {user && (
-          <div>
+          <div
+            style={{ width: "100%", display: "flex", flexDirection: "column" }}
+          >
             <UserProfileSection user={user} />
-            {userPosts && <ListOfPosts type={"profile"} />}
+            <ImageAlbumMenu
+              setisPostsOnDisplay={setisPostsOnDisplay}
+              isPostsOnDisplay={isPostsOnDisplay}
+            />
+            {userPosts && isPostsOnDisplay ? (
+              <ListOfPosts type={"profile"} />
+            ) : (
+              //
+              <div>list of albums</div>
+            )}
           </div>
         )}
       </div>
