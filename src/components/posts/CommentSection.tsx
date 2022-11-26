@@ -7,7 +7,6 @@ const CommentSection = ({ children }: { children: React.ReactNode }) => {
         overflow: "scroll",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
         flexDirection: "column",
       }}
     >

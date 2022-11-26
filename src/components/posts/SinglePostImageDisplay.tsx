@@ -44,7 +44,11 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
           <CommentSection>
             {coments ? (
               coments.map((coment) => (
-                <SingleComent key={coment.id} coment={coment} />
+                <SingleComent
+                  key={coment.id}
+                  coment={coment}
+                  postOwner={post.userId}
+                />
               ))
             ) : (
               <div>Be first who leaved a coment.</div>

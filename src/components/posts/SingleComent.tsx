@@ -9,7 +9,7 @@ import {
   ProfileImage,
 } from "./SingleComent.styled";
 
-type Props = { coment: IComent };
+type Props = { coment: IComent; postOwner: number };
 
 const SingleComent = (props: Props) => {
   const loggedInUser = useAppSelector((state) => state.Users.loggedInUser);
@@ -26,7 +26,8 @@ const SingleComent = (props: Props) => {
         <p>{props.coment.email}</p>
         <p>{props.coment.body}</p>
       </ComentContent>
-      {props.coment.email === loggedInUser?.email && (
+      {(props.postOwner === loggedInUser?.id ||
+        props.coment.email === loggedInUser?.email) && (
         <RiDeleteBack2Line
           color={"#ff0000"}
           size={15}
