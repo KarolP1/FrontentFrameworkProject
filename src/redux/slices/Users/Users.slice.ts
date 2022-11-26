@@ -22,7 +22,6 @@ export const UserSlice = createSlice({
       state.loggedInUser = payload;
     },
     editUser: (state, { payload }: PayloadAction<IUser>) => {
-      state.loggedInUser = payload;
       const newUserList = state.users?.map((user) =>
         user.id === payload.id ? payload : user
       );

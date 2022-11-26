@@ -27,23 +27,26 @@ const UserProfileSection: React.FC<{ user: IUser }> = ({ user }) => {
     if (loggedInUser?.username === editUserState.username) {
       navigate(`/profile/${loggedInUser?.username}`);
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, editUserState.username, navigate]);
 
   return (
     <MainContainer>
       <ProfileInfoContainer>
-        <div
-          style={{ position: "absolute", right: 10, top: 10 }}
-          onClick={() => {
-            setIsEditModeEnabled(!isEditModeEnabled);
-          }}
-        >
-          {!isEditModeEnabled ? (
-            <RiEditLine color={"#fff"} size={20} />
-          ) : (
-            <RiEditFill color={"#fff"} size={20} />
-          )}
-        </div>
+        {user.id === loggedInUser?.id && (
+          <div
+            style={{ position: "absolute", right: 10, top: 10 }}
+            onClick={() => {
+              setIsEditModeEnabled(!isEditModeEnabled);
+            }}
+          >
+            {!isEditModeEnabled ? (
+              <RiEditLine color={"#fff"} size={20} />
+            ) : (
+              <RiEditFill color={"#fff"} size={20} />
+            )}
+          </div>
+        )}
+
         {!isEditModeEnabled && <ProfileImg src={imageURI} alt="profileImage" />}
         {!isEditModeEnabled ? (
           <Info>
