@@ -1,21 +1,35 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IPost } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { setPostLikes } from "../../redux/slices/Posts/Posts.slice";
+import {
+  setPostLikes,
+  setUserQueryId,
+} from "../../redux/slices/Posts/Posts.slice";
 import SearchUser from "../ui/LoggedIn/SearchUser";
 import SinglePost from "./SinglePost";
 import { AllPostContainer } from "./SinglePost.styled";
 
 const ListOfPosts = ({ type }: { type?: "profile" }) => {
   const dispatch = useAppDispatch();
+  const { userName } = useParams();
+  const users = useAppSelector((state) => state.Users.users);
+
+  useEffect(() => {
+    if (userName) {
+      const singleUser = users?.find((user) => user.username === userName);
+      if (singleUser) dispatch(setUserQueryId({ id: singleUser?.id }));
+      else dispatch(setUserQueryId({ id: null }));
+    }
+  }, [userName, dispatch, users]);
 
   const [postToDisplay, setPostToDisplay] = useState<null | IPost[]>(null);
   const { posts, UserQueryId, numberOfLikes } = useAppSelector(
     (state) => state.Posts
   );
 
+  console.log({ UserQueryId, userName });
   const navigate = useNavigate();
 
   useEffect(() => {
