@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RiImageAddLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import CommentSection from "../../components/posts/CommentSection";
 import {
   AddPostButton,
@@ -28,6 +29,7 @@ const AddNewPost = (props: Props) => {
   const dispatch = useAppDispatch();
   const { loggedInUser } = useAppSelector((state) => state.Users);
   const [createPost, { isLoading, data }] = useCreatePostMutation();
+  const navigate = useNavigate();
 
   const [post, setPost] = useState<{
     title: string;
@@ -63,8 +65,9 @@ const AddNewPost = (props: Props) => {
       dispatch(addPostLike({ postId: newId }));
 
       setPost(initialPost);
+      navigate(`/profile/${loggedInUser?.username}`);
     }
-  }, [data, dispatch, loggedInUser]);
+  }, [data, dispatch, loggedInUser, navigate]);
 
   return (
     <SignedInContainer>
