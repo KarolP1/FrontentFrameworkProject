@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllCommentsQuery, useGetUsersQuery } from "../../redux/api";
 import { IComent, IPost, IUser } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { increment } from "../../redux/slices/Posts/Posts.slice";
+import { increment, setPosts } from "../../redux/slices/Posts/Posts.slice";
 import { BsHeart, BsHeartFill, BsThreeDotsVertical } from "react-icons/bs";
 import { RiDeleteBin3Line } from "react-icons/ri";
 import {
@@ -24,57 +23,68 @@ import comentIcon from "../../assets/icons/message.svg";
 const SinglePost = ({
   post,
   onClick,
-  DeleteAction,
 }: {
   post: IPost;
   onClick: () => void;
-  DeleteAction: (postId: number) => void;
 }) => {
   const dispatch = useAppDispatch();
-  const loggedInUser = sessionStorage.getItem("loggedInId");
-  const isYourPost = loggedInUser && parseInt(loggedInUser) === post.userId;
 
-  const { idsOfLikedPosts, numberOfLikes } = useAppSelector(
+  const loggedInUser = useAppSelector((state) => state.Users.loggedInUser);
+  const isYourPost = loggedInUser?.id === post.userId;
+
+  const { idsOfLikedPosts, numberOfLikes, images, posts } = useAppSelector(
     (state) => state.Posts
   );
-  const { data } = useGetAllCommentsQuery();
-  const usersData = useGetUsersQuery();
-  const [coments, setComents] = useState<IComent[] | null>(null);
-  const [user, setUser] = useState<IUser | null>(null);
-
-  const signedInUserId = sessionStorage.getItem("loggedInId");
+  const [image, setImage] = useState<string>("");
 
   useEffect(() => {
-    if (data) {
-      const filteredComents = data.filter(
+    if (images) {
+      const singleImage = images.filter((image) => image.id === post.id)[0];
+      if (singleImage) setImage(singleImage?.image);
+      else {
+        setImage(images[0].image);
+      }
+    }
+  }, [images, post.id]);
+  const comments = useAppSelector((state) => state.Comments.comment);
+  const usersData = useAppSelector((state) => state.Users.users);
+  const [coments, setComents] = useState<IComent[] | null>(null);
+
+  const [user, setUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    if (comments) {
+      const filteredComents = comments.filter(
         (coment) => coment.postId === post.id
       );
       setComents(filteredComents);
     }
-    if (usersData.data) {
-      const singleUser = usersData.data.filter(
-        (user) => user.id === post.userId
-      )[0];
+    if (usersData) {
+      const singleUser = usersData.filter((user) => user.id === post.userId)[0];
       setUser(singleUser);
     }
-  }, [data, post.id, usersData.data, post.userId]);
+  }, [comments, post.id, usersData, post.userId]);
 
   const postNumberOfLikes = numberOfLikes?.filter(
     (i) => i.postId === post.id
   )[0];
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [animatedBool, setanimatedBool] = useState<boolean>(false);
-  const imageSource = `https://picsum.photos/id/${Math.floor(
-    Math.random() * 100
-  )}/300/300`;
   useEffect(() => {
     if (idsOfLikedPosts?.includes(post.id)) setIsLiked(true);
     else setIsLiked(false);
   }, [idsOfLikedPosts, post.id]);
+
+  const DeleteAction = (postId: number) => {
+    if (posts) {
+      const filteredPosts = posts.filter((post) => postId !== post.id);
+      dispatch(setPosts(filteredPosts));
+    }
+  };
   return (
     <SinglePostContainer>
       <PostContext onClick={onClick}>
-        <img alt="randomimagetopost" src={imageSource} />
+        <img alt="randomimagetopost" src={image} />
         <PostParts>
           <AllIconContainer>
             <IconWithText>
@@ -109,7 +119,7 @@ const SinglePost = ({
 
           <PostTitle>{post.title}</PostTitle>
           <PostUserLink to={`/profile/${user?.username}`}>
-            {signedInUserId && parseInt(signedInUserId) === post.userId
+            {loggedInUser && loggedInUser.id === post.userId
               ? "Your's image"
               : user?.username}
           </PostUserLink>

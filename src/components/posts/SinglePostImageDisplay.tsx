@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useGetAllCommentsQuery } from "../../redux/api";
 import { IComent, IPost } from "../../redux/api/types";
+import { useAppSelector } from "../../redux/hooks";
 import Spinner from "../ui/loading";
 import AddComentSection from "./AddComentSection";
 import CommentSection from "./CommentSection";
@@ -14,9 +14,8 @@ import {
 
 const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
   const [coments, setComents] = useState<IComent[] | null>(null);
-  const { data } = useGetAllCommentsQuery();
-  const [newComent, setNewComent] = useState<IComent | null>(null);
   const [isLoading, setisLoading] = useState(false);
+  const data = useAppSelector((state) => state.Comments.comment);
 
   useEffect(() => {
     if (data) {
@@ -26,18 +25,6 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
       setComents(filteredComents);
     }
   }, [data, post.id, post.userId]);
-
-  useEffect(() => {
-    if (newComent) {
-      const newComentToPush = {
-        ...newComent,
-        id: Math.floor(Math.random() * 10000),
-      }; //random image starting from 1000 to avoid collisions
-      console.log(newComentToPush);
-      coments?.push(newComentToPush);
-    }
-    setNewComent(null);
-  }, [newComent, coments]);
 
   return (
     <PostContainer>
@@ -66,9 +53,6 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
         )}
         <AddComentSection
           postId={post.id}
-          setNewComent={(coment: IComent) => {
-            setNewComent(coment);
-          }}
           setIsLoading={(isLoading: boolean) => setisLoading(isLoading)}
         />
       </ContentContainer>

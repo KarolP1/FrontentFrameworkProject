@@ -7,14 +7,13 @@ import "./style.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { logout } from "../../../redux/slices/login.slice";
 import SearchUser from "./SearchUser";
-import { Link } from "react-router-dom";
-import { useGetUsersQuery } from "../../../redux/api";
+import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../../../redux/slices/Users/Users.slice";
 
 const AppBar = ({ type }: { type?: "Profile" }) => {
-  const userId = useAppSelector((state) => state.login.userId);
-  const { data } = useGetUsersQuery();
-  const loggedInUser = data?.filter((user) => user.id === userId)[0];
+  const loggedInUser = useAppSelector((state) => state.Users.loggedInUser);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <AppbarContainer>
       <Link to="/">
@@ -28,7 +27,12 @@ const AppBar = ({ type }: { type?: "Profile" }) => {
               className="icon"
               color={theme.color.tint}
               size={30}
-              onClick={() => dispatch(logout())}
+              onClick={() => {
+                dispatch(logout());
+                dispatch(setUser(null));
+                sessionStorage.setItem("loggedInId", "");
+                navigate("/");
+              }}
             />
             <Link to={`/profile/${loggedInUser?.username}`}>
               <BiUser className="icon" color={theme.color.tint} size={30} />

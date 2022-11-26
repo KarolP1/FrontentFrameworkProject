@@ -1,3 +1,4 @@
+import { IPost } from "./../../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -10,11 +11,15 @@ interface IIPostSlice {
       }[]
     | null;
   UserQueryId?: number | null;
+  posts: IPost[] | null;
+  images: { id: number; image: string }[] | null;
 }
 
 const initialState: IIPostSlice = {
   idsOfLikedPosts: null,
   numberOfLikes: null,
+  posts: null,
+  images: null,
 };
 export const PostSlice = createSlice({
   name: "counter",
@@ -69,7 +74,17 @@ export const PostSlice = createSlice({
     ) => {
       state.UserQueryId = payload.id;
     },
+    setPosts: (state, { payload }: PayloadAction<IPost[]>) => {
+      state.posts = payload;
+    },
+    setImages: (
+      state,
+      { payload }: PayloadAction<{ id: number; image: string }[]>
+    ) => {
+      state.images = payload;
+    },
   },
 });
 
-export const { increment, setPostLikes, setUserQueryId } = PostSlice.actions;
+export const { increment, setPostLikes, setUserQueryId, setPosts, setImages } =
+  PostSlice.actions;

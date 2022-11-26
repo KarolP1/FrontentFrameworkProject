@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import ListOfPosts from "../../components/posts/ListOfPosts";
 import UserProfileSection from "../../components/profile/UserProfileSection";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
-import { useGetAllPostsQuery, useGetUsersQuery } from "../../redux/api";
 import { IPost, IUser } from "../../redux/api/types";
+import { useAppSelector } from "../../redux/hooks";
 
 const ProfilePage = () => {
   const { userName } = useParams();
-  const { data } = useGetUsersQuery();
+  const data = useAppSelector((state) => state.Users.users);
 
   const [user, setUser] = useState<IUser | null>(null);
   useEffect(() => {
@@ -18,8 +18,7 @@ const ProfilePage = () => {
     }
   }, [data, userName]);
 
-  const PicturesData = useGetAllPostsQuery();
-  const posts = PicturesData.data;
+  const posts = useAppSelector((state) => state.Posts.posts);
 
   const [userPosts, setUserPosts] = useState<IPost[] | null>(null);
 
@@ -44,7 +43,7 @@ const ProfilePage = () => {
         {user && (
           <div>
             <UserProfileSection user={user} />
-            {userPosts && <ListOfPosts posts={userPosts} type={"profile"} />}
+            {userPosts && <ListOfPosts type={"profile"} />}
           </div>
         )}
       </div>

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SinglePostImageDisplay from "../../components/posts/SinglePostImageDisplay";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
-import { useGetAllPostsQuery } from "../../redux/api";
 import { IPost } from "../../redux/api/types";
+import { useAppSelector } from "../../redux/hooks";
 
 const SingleImage = () => {
-  const PicturesData = useGetAllPostsQuery();
-  const posts = PicturesData.data;
+  const posts = useAppSelector((state) => state.Posts.posts);
   const { imageId } = useParams();
   const [singlePost, setSinglePost] = useState<IPost | null>(null);
   useEffect(() => {

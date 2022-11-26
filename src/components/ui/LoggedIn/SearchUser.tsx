@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, DisplayNames, SearchContainer } from "./SearchUser.styled";
 import { BiSearchAlt } from "react-icons/bi";
 import { ThemeConsumer } from "styled-components";
-import { useGetUsersQuery } from "../../../redux/api";
 import { setUserQueryId } from "../../../redux/slices/Posts/Posts.slice";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +18,7 @@ const SearchUser = ({
   const dispatch = useAppDispatch();
   const [userSearch, setUserSearch] = useState("");
   const [isVisibleMenu, setIsVisibleMenu] = useState(false);
-  const { data } = useGetUsersQuery();
+  const data = useAppSelector((state) => state.Users.users);
   const [usersToDisplay, setUsersToDisplay] = useState(data);
 
   useEffect(() => {
@@ -53,7 +52,7 @@ const SearchUser = ({
         }
         return false;
       });
-      setUsersToDisplay(filter);
+      if (filter) setUsersToDisplay(filter);
     }
   }, [data, userSearch]);
 

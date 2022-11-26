@@ -1,13 +1,62 @@
+import { useEffect, useState } from "react";
 import ListOfPosts from "../../components/posts/ListOfPosts";
 import Spinner from "../../components/ui/loading";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
-import { useGetAllPostsQuery } from "../../redux/api";
+import { useGetAllCommentsQuery, useGetAllPostsQuery } from "../../redux/api";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { setComments } from "../../redux/slices/Coments/Coments.slice";
+import { setImages, setPosts } from "../../redux/slices/Posts/Posts.slice";
 
 const Homepage = () => {
-  const { isLoading, data } = useGetAllPostsQuery();
+  const posts = useAppSelector((state) => state.Posts.posts);
+  const coments = useAppSelector((state) => state.Comments.comment);
+
+  const postResponse = useGetAllPostsQuery();
+  const comentResponse = useGetAllCommentsQuery();
+
+  const dispatch = useAppDispatch();
+
+  const [imagesState, setImagesState] = useState<
+    { id: number; image: string }[]
+  >([]);
+
+  const renderImagesArray = async () => {
+    let imageArray: { id: number; image: string }[] = [];
+    for (let index = 0; index < 100; index++) {
+      const newImagesArr = {
+        id: index,
+        image: `https://picsum.photos/id/${index}/300/300`,
+      };
+      imageArray.push(newImagesArr);
+    }
+    return imageArray;
+  };
+
+  useEffect(() => {
+    renderImagesArray().then((val) => setImagesState(val));
+  }, []);
+
+  useEffect(() => {
+    if (imagesState && imagesState.length === 100) {
+      dispatch(setImages(imagesState));
+    }
+  }, [imagesState, dispatch]);
+
+  useEffect(() => {
+    if (!posts && postResponse.data) {
+      dispatch(setPosts(postResponse.data));
+    }
+  }, [postResponse, posts, dispatch]);
+
+  useEffect(() => {
+    if (!coments && comentResponse.data) {
+      dispatch(setComments(comentResponse.data));
+    }
+  }, [comentResponse, coments, dispatch]);
+
   return (
     <SignedInContainer>
-      {isLoading ? <Spinner /> : data && <ListOfPosts posts={data} />}
+      {posts ? <ListOfPosts /> : <Spinner />}
     </SignedInContainer>
   );
 };

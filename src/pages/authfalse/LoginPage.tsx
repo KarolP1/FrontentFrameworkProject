@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
 import Spinner from "../../components/ui/loading";
@@ -14,8 +14,7 @@ import {
   LoginInput,
   LoginInputButton,
 } from "../../components/ui/Login/LoginComponent";
-import { useGetUsersQuery } from "../../redux/api";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { login, setLoggedInUser } from "../../redux/slices/login.slice";
 import { ContainerMain } from "./LoginPage.styles";
 
@@ -26,7 +25,7 @@ export interface IUserWithImage {
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetUsersQuery();
+  const data = useAppSelector((state) => state.Users.users);
   const [loginForm, setLoginForm] = useState<{
     email: string;
     password: string;
@@ -34,15 +33,6 @@ const LoginPage = () => {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
-  const loginState = sessionStorage.getItem("loggedInId");
-
-  useEffect(() => {
-    console.log(loginState);
-    if (loginState) {
-      dispatch(login());
-      dispatch(setLoggedInUser(parseInt(loginState)));
-    }
-  }, [loginState, dispatch]);
 
   const onSubmit = () => {
     setErrorMessage(null);
@@ -61,7 +51,9 @@ const LoginPage = () => {
           return null;
         })[0];
         dispatch(login());
-        if (loggedInUser) dispatch(setLoggedInUser(loggedInUser?.id));
+        if (loggedInUser) {
+          dispatch(setLoggedInUser(loggedInUser?.id));
+        }
       }
       setIsLoadingLogin(false);
     }, 1000);
@@ -71,49 +63,45 @@ const LoginPage = () => {
     <ThemeConsumer>
       {(theme) => (
         <ContainerMain>
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <LoginComponent>
-              {isLoadingLogin ? (
-                <Spinner />
-              ) : (
-                <>
-                  <Logo height={40} />
-                  <FormContainer>
-                    <LoginInput
-                      autoFocus
-                      placeholder="Email address"
-                      setValue={(text: string) =>
-                        setLoginForm({ ...loginForm, email: text })
-                      }
-                      value={loginForm.email}
-                    />
-                    <LoginInput
-                      placeholder="Password"
-                      type="password"
-                      setValue={(text: string) =>
-                        setLoginForm({ ...loginForm, password: text })
-                      }
-                      value={loginForm.password}
-                    />
-                    {errorMessage && (
-                      <ErrorMessageTxt> Error: {errorMessage}</ErrorMessageTxt>
-                    )}
-                    <LoginInputButton
-                      type={"button"}
-                      value={"Login"}
-                      dark
-                      onClick={() => onSubmit()}
-                    />
-                  </FormContainer>
-                  <LinkTxt to={"/"}>
-                    Do not have account? Try to create one there.{" "}
-                  </LinkTxt>
-                </>
-              )}
-            </LoginComponent>
-          )}
+          <LoginComponent>
+            {isLoadingLogin ? (
+              <Spinner />
+            ) : (
+              <LoginComponent>
+                <Logo height={40} />
+                <FormContainer>
+                  <LoginInput
+                    autoFocus
+                    placeholder="Email address"
+                    setValue={(text: string) =>
+                      setLoginForm({ ...loginForm, email: text })
+                    }
+                    value={loginForm.email}
+                  />
+                  <LoginInput
+                    placeholder="Password"
+                    type="password"
+                    setValue={(text: string) =>
+                      setLoginForm({ ...loginForm, password: text })
+                    }
+                    value={loginForm.password}
+                  />
+                  {errorMessage && (
+                    <ErrorMessageTxt> Error: {errorMessage}</ErrorMessageTxt>
+                  )}
+                  <LoginInputButton
+                    type={"button"}
+                    value={"Login"}
+                    dark
+                    onClick={() => onSubmit()}
+                  />
+                </FormContainer>
+                <LinkTxt to={"/"}>
+                  Do not have account? Try to create one there.{" "}
+                </LinkTxt>
+              </LoginComponent>
+            )}
+          </LoginComponent>
         </ContainerMain>
       )}
     </ThemeConsumer>

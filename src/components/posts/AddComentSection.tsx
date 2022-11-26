@@ -2,31 +2,30 @@ import React, { useState } from "react";
 import { ComentPostContainer } from "./AddComentSection.styled";
 import { HiChat } from "react-icons/hi";
 import { ThemeConsumer } from "styled-components";
-import { useCreateComentMutation, useGetUsersQuery } from "../../redux/api";
-import { useAppSelector } from "../../redux/hooks";
+import { useCreateComentMutation } from "../../redux/api";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useEffect } from "react";
-import { IComent } from "../../redux/api/types";
+import { addComment } from "../../redux/slices/Coments/Coments.slice";
 
 type Props = {
   postId: number;
-  setNewComent: (coment: IComent) => void;
   setIsLoading: (isLoading: boolean) => void;
 };
 
 const AddComentSection = (props: Props) => {
   const [createPost, { isLoading, data }] = useCreateComentMutation();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (data) {
-      props.setNewComent(data);
-    }
-  }, [data, props]);
+    if (data)
+      dispatch(addComment({ ...data, id: Math.floor(Math.random() * 10000) }));
+  }, [data, dispatch]);
+
   useEffect(() => {
     props.setIsLoading(isLoading);
   }, [isLoading, props]);
-  const userId = useAppSelector((state) => state.login.userId);
-  const user = useGetUsersQuery();
-  const loggedInUser = user.data?.filter((user) => user.id === userId)[0];
+
+  const loggedInUser = useAppSelector((state) => state.Users.loggedInUser);
 
   const [textMessage, setTextMessage] = useState("");
   return (
@@ -43,13 +42,12 @@ const AddComentSection = (props: Props) => {
                 coment: {
                   name: loggedInUser?.username,
                   body: textMessage,
-                  email: loggedInUser
-                    ? loggedInUser.email
-                    : "not logged in user",
+                  email: loggedInUser ? loggedInUser.email : "",
                   postId: props.postId,
                 },
                 postId: props.postId,
               });
+
               setTextMessage("");
             }}
           >

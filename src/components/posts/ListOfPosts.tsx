@@ -8,23 +8,27 @@ import SearchUser from "../ui/LoggedIn/SearchUser";
 import SinglePost from "./SinglePost";
 import { AllPostContainer } from "./SinglePost.styled";
 
-const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
+const ListOfPosts = ({ type }: { type?: "profile" }) => {
   const dispatch = useAppDispatch();
-  const { UserQueryId } = useAppSelector((state) => state.Posts);
-  const [postToDisplay, setPostToDisplay] = useState(posts);
+
+  const [postToDisplay, setPostToDisplay] = useState<null | IPost[]>(null);
+  const { posts, UserQueryId } = useAppSelector((state) => state.Posts);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const postLikes = posts.map((post) => {
+    const postLikes = posts?.map((post) => {
       return { postId: post.id, numberOfLikes: Math.random() * 1000 };
     });
-    dispatch(setPostLikes(postLikes));
+    if (postLikes) dispatch(setPostLikes(postLikes));
   }, [posts, dispatch]);
 
   useEffect(() => {
     if (UserQueryId) {
-      const filteredPosts = posts.filter((post) => post.userId === UserQueryId);
-      setPostToDisplay(filteredPosts);
+      const filteredPosts = posts?.filter(
+        (post) => post.userId === UserQueryId
+      );
+      if (filteredPosts) setPostToDisplay(filteredPosts);
     } else {
       setPostToDisplay(posts);
     }
@@ -34,15 +38,9 @@ const ListOfPosts = ({ posts, type }: { posts: IPost[]; type?: "profile" }) => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       {type !== "profile" && <SearchUser isMoblie={true} type={type} />}
       <AllPostContainer>
-        {postToDisplay.map((post) => {
+        {postToDisplay?.map((post) => {
           return (
             <SinglePost
-              DeleteAction={() => {
-                const newPosts = posts.filter(
-                  (posttodelete) => post.id !== posttodelete.id
-                );
-                setPostToDisplay(newPosts);
-              }}
               post={post}
               key={post.id}
               onClick={() => {

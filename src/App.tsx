@@ -5,21 +5,39 @@ import LoginPage from "./pages/authfalse/LoginPage";
 import ProfilePage from "./pages/authtrue/Profile";
 import NotFound from "./pages/authtrue/NotFound";
 import { useEffect } from "react";
-import { login, setLoggedInUser } from "./redux/slices/login.slice";
+import { login, logout, setLoggedInUser } from "./redux/slices/login.slice";
 import SingleImage from "./pages/authtrue/singleImage";
+import { setUser, setUsers } from "./redux/slices/Users/Users.slice";
+import { useGetUsersQuery } from "./redux/api";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
   const dispatch = useAppDispatch();
   const loginState = sessionStorage.getItem("loggedInId");
+  const users = useGetUsersQuery();
+  useEffect(() => {
+    if (users.data) {
+      dispatch(setUsers(users.data));
+    }
+  }, [users, dispatch]);
+
+  const listOfUsers = useAppSelector((state) => state.Users.users);
+  const loggedInUser = listOfUsers?.filter((user) => {
+    if (loginState) return user.id === parseInt(loginState);
+    else return false;
+  })[0];
 
   useEffect(() => {
-    console.log(loginState);
-    if (loginState) {
-      dispatch(login());
-      dispatch(setLoggedInUser(parseInt(loginState)));
+    if (loginState && loginState?.length !== 0) {
+      if (loggedInUser) {
+        dispatch(setLoggedInUser(loggedInUser.id));
+        dispatch(setUser(loggedInUser));
+        dispatch(login());
+      }
+    } else {
+      dispatch(logout());
     }
-  }, [loginState, dispatch]);
+  }, [loginState, dispatch, loggedInUser]);
 
   return (
     <>

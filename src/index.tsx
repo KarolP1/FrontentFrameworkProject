@@ -12,7 +12,6 @@ import { colorTheme } from "./themes";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-console.log(colorTheme);
 root.render(
   <Router>
     <ThemeProvider theme={colorTheme}>
