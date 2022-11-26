@@ -23,7 +23,7 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
       return { postId: post.id, numberOfLikes: Math.random() * 1000 };
     });
     if (!numberOfLikes && postLikes) dispatch(setPostLikes(postLikes));
-  }, [posts, dispatch]);
+  }, [posts, dispatch, numberOfLikes]);
 
   useEffect(() => {
     if (UserQueryId) {
