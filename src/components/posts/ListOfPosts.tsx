@@ -12,7 +12,9 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
   const dispatch = useAppDispatch();
 
   const [postToDisplay, setPostToDisplay] = useState<null | IPost[]>(null);
-  const { posts, UserQueryId } = useAppSelector((state) => state.Posts);
+  const { posts, UserQueryId, numberOfLikes } = useAppSelector(
+    (state) => state.Posts
+  );
 
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
     const postLikes = posts?.map((post) => {
       return { postId: post.id, numberOfLikes: Math.random() * 1000 };
     });
-    if (postLikes) dispatch(setPostLikes(postLikes));
+    if (!numberOfLikes && postLikes) dispatch(setPostLikes(postLikes));
   }, [posts, dispatch]);
 
   useEffect(() => {
