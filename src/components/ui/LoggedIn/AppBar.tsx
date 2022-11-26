@@ -1,7 +1,7 @@
 import React from "react";
 import { Logo } from "../../../pages/authfalse/LoginPage";
 import { AppbarContainer } from "./AppBar.styled";
-import { BiLogOut, BiUser } from "react-icons/bi";
+import { BiLogOut, BiPlusCircle, BiUser } from "react-icons/bi";
 import { ThemeConsumer } from "styled-components";
 import "./style.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -22,7 +22,17 @@ const AppBar = ({ type }: { type?: "Profile" }) => {
       <SearchUser type={type} />
       <ThemeConsumer>
         {(theme) => (
-          <div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <Link to={`/image/post/`}>
+              <BiPlusCircle
+                className="icon"
+                color={theme.color.tint}
+                size={30}
+              />
+            </Link>
+            <Link to={`/profile/${loggedInUser?.username}`}>
+              <BiUser className="icon" color={theme.color.tint} size={30} />
+            </Link>
             <BiLogOut
               className="icon"
               color={theme.color.tint}
@@ -34,9 +44,6 @@ const AppBar = ({ type }: { type?: "Profile" }) => {
                 navigate("/");
               }}
             />
-            <Link to={`/profile/${loggedInUser?.username}`}>
-              <BiUser className="icon" color={theme.color.tint} size={30} />
-            </Link>
           </div>
         )}
       </ThemeConsumer>

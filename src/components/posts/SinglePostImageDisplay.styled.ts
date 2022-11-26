@@ -29,6 +29,8 @@ export const Description = styled.h3`
   :first-letter {
     text-transform: uppercase;
   }
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ContentContainer = styled.div`
@@ -36,6 +38,8 @@ export const ContentContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: ${(props) => props.theme.color.medium};
+
   @media (min-width: 550px) {
     padding: 2rem 1rem;
   }

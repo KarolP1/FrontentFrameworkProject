@@ -27,6 +27,16 @@ export const userApi = createApi({
         };
       },
     }),
+    createPost: builder.mutation<Partial<IPost>, IPost>({
+      query(state) {
+        return {
+          url: `/posts`,
+          method: "POST",
+          credentials: "include",
+          body: state,
+        };
+      },
+    }),
   }),
 });
 
@@ -35,4 +45,5 @@ export const {
   useGetAllPostsQuery,
   useGetAllCommentsQuery,
   useCreateComentMutation,
+  useCreatePostMutation,
 } = userApi;

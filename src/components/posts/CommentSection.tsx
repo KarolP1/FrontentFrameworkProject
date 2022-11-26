@@ -1,13 +1,19 @@
 import React from "react";
 
-const CommentSection = ({
-  postId,
-  children,
-}: {
-  postId: number;
-  children: React.ReactNode;
-}) => {
-  return <div style={{ overflow: "scroll" }}>{children}</div>;
+const CommentSection = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div
+      style={{
+        overflow: "scroll",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default CommentSection;

@@ -41,7 +41,7 @@ const SinglePostImageDisplay = ({ post }: { post: IPost }) => {
         {isLoading ? (
           <Spinner />
         ) : (
-          <CommentSection postId={post.id}>
+          <CommentSection>
             {coments ? (
               coments.map((coment) => (
                 <SingleComent key={coment.id} coment={coment} />

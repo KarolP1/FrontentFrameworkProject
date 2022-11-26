@@ -9,6 +9,7 @@ import { login, logout, setLoggedInUser } from "./redux/slices/login.slice";
 import SingleImage from "./pages/authtrue/singleImage";
 import { setUser, setUsers } from "./redux/slices/Users/Users.slice";
 import { useGetUsersQuery } from "./redux/api";
+import AddNewPost from "./pages/authtrue/AddNewPost";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/profile/:userName" element={<ProfilePage />} />
           <Route path="/image/view/:imageId" element={<SingleImage />} />
           <Route path="/image/edit/:imageId" element={<ProfilePage />} />
+          <Route path="/image/post/" element={<AddNewPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       ) : (

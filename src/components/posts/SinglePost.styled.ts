@@ -150,3 +150,27 @@ export const MoreIconsDisplay = styled.div<{ active: boolean }>`
     display: ${(props) => (props.active ? "flex" : "none")};
   }
 `;
+
+export const AddPostInput = styled.input`
+  width: 100%;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10rem;
+  background-color: ${(props) => props.theme.color.dark};
+  color: ${(props) => props.theme.color.lightest};
+
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 0.8; /* Firefox */
+  }
+`;
+export const AddPostButton = styled.button`
+  width: 100%;
+  padding: 1rem 2rem;
+  margin: 2rem 0;
+  border: none;
+  border-radius: 10rem;
+  background-color: ${(props) => props.theme.color.dark};
+  color: ${(props) => props.theme.color.lightest};
+`;

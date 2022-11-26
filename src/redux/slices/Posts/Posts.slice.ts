@@ -2,6 +2,11 @@ import { IPost } from "./../../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface IImageState {
+  id: number;
+  image: string;
+}
+
 interface IIPostSlice {
   idsOfLikedPosts: number[] | null;
   numberOfLikes:
@@ -12,7 +17,7 @@ interface IIPostSlice {
     | null;
   UserQueryId?: number | null;
   posts: IPost[] | null;
-  images: { id: number; image: string }[] | null;
+  images: IImageState[] | null;
 }
 
 const initialState: IIPostSlice = {
@@ -68,6 +73,18 @@ export const PostSlice = createSlice({
     ) => {
       state.numberOfLikes = payload;
     },
+    addPostLike: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        postId: number;
+      }>
+    ) => {
+      state.numberOfLikes = state.numberOfLikes
+        ? [...state.numberOfLikes, { postId: payload.postId, numberOfLikes: 0 }]
+        : [{ postId: payload.postId, numberOfLikes: 0 }];
+    },
     setUserQueryId: (
       state,
       { payload }: PayloadAction<{ id: number | null }>
@@ -77,14 +94,48 @@ export const PostSlice = createSlice({
     setPosts: (state, { payload }: PayloadAction<IPost[]>) => {
       state.posts = payload;
     },
+    addNewPost: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        title: string;
+        body: string;
+        id: number;
+        userId: number;
+      }>
+    ) => {
+      if (state.posts) {
+        state.posts = [...state.posts, { ...payload }];
+      } else {
+        state.posts = [payload];
+      }
+    },
     setImages: (
       state,
       { payload }: PayloadAction<{ id: number; image: string }[]>
     ) => {
       state.images = payload;
     },
+    setNewImage: (
+      state,
+      { payload }: PayloadAction<{ id: number; image: string }>
+    ) => {
+      if (state.images) state.images = [...state.images, payload];
+      else {
+        state.images = [payload];
+      }
+    },
   },
 });
 
-export const { increment, setPostLikes, setUserQueryId, setPosts, setImages } =
-  PostSlice.actions;
+export const {
+  increment,
+  setPostLikes,
+  addPostLike,
+  setUserQueryId,
+  setPosts,
+  setImages,
+  setNewImage,
+  addNewPost,
+} = PostSlice.actions;
