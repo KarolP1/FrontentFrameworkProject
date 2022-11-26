@@ -14,11 +14,13 @@ export const ComentContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 1rem 0;
+  width: 100%;
+  padding-right: 2rem;
 `;
 
 export const ComentContent = styled.div`
   padding: 0 1rem;
-
+  flex: 1;
   p:first-child {
     font-size: 1.5rem;
     color: ${(props) => props.theme.color.darkest};

@@ -1,5 +1,8 @@
 import React from "react";
+import { RiDeleteBack2Line } from "react-icons/ri";
 import { IComent } from "../../redux/api/types";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { deleteComment } from "../../redux/slices/Coments/Coments.slice";
 import {
   ComentContainer,
   ComentContent,
@@ -9,6 +12,9 @@ import {
 type Props = { coment: IComent };
 
 const SingleComent = (props: Props) => {
+  const loggedInUser = useAppSelector((state) => state.Users.loggedInUser);
+  const dispatch = useAppDispatch();
+
   return (
     <ComentContainer>
       <ProfileImage
@@ -20,6 +26,15 @@ const SingleComent = (props: Props) => {
         <p>{props.coment.email}</p>
         <p>{props.coment.body}</p>
       </ComentContent>
+      {props.coment.email === loggedInUser?.email && (
+        <RiDeleteBack2Line
+          color={"#ff0000"}
+          size={15}
+          onClick={() => {
+            dispatch(deleteComment(props.coment.id));
+          }}
+        />
+      )}
     </ComentContainer>
   );
 };

@@ -19,7 +19,13 @@ export const CommentsSlice = createSlice({
     addComment: (state, { payload }: PayloadAction<IComent>) => {
       state.comment?.push(payload);
     },
+    deleteComment: (state, { payload }: PayloadAction<number>) => {
+      const newComentsFilter = state.comment?.filter(
+        (coment) => coment.id !== payload
+      );
+      if (newComentsFilter) state.comment = newComentsFilter;
+    },
   },
 });
 
-export const { setComments, addComment } = CommentsSlice.actions;
+export const { setComments, addComment, deleteComment } = CommentsSlice.actions;
