@@ -21,6 +21,7 @@ export const PostContext = styled.div`
   img {
     width: 100%;
     aspect-ratio: 1;
+    cursor: pointer;
   }
   height: 100%;
 `;
