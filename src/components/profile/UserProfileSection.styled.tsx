@@ -7,6 +7,7 @@ export const ProfileInfoContainer = styled.div`
   flex-direction: row;
   display: flex;
   padding: 1rem;
+  position: relative;
 
   @media (min-width: 768px) {
     width: 50%;
@@ -25,6 +26,7 @@ export const MainContainer = styled.div`
   width: 100%;
   overflow: hidden;
   margin-bottom: 1rem;
+  position: relative;
 `;
 
 export const Info = styled.div`

@@ -21,7 +21,14 @@ export const UserSlice = createSlice({
     setUser: (state, { payload }: PayloadAction<IUser | null>) => {
       state.loggedInUser = payload;
     },
+    editUser: (state, { payload }: PayloadAction<IUser>) => {
+      state.loggedInUser = payload;
+      const newUserList = state.users?.map((user) =>
+        user.id === payload.id ? payload : user
+      );
+      if (newUserList) state.users = newUserList;
+    },
   },
 });
 
-export const { setUsers, setUser } = UserSlice.actions;
+export const { setUsers, setUser, editUser } = UserSlice.actions;
