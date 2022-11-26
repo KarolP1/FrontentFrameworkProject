@@ -37,4 +37,13 @@ export const Info = styled.div`
     font-size: 1.2rem;
     color: ${(props) => props.theme.color.lightest};
   }
+  input {
+    font-size: 1.2rem;
+    color: ${(props) => props.theme.color.tint};
+    background-color: ${(props) => props.theme.color.dark};
+    border: none;
+    margin: 2px 1rem;
+    padding: 0.5rem;
+    border-radius: 1rem;
+  }
 `;
