@@ -63,45 +63,43 @@ const LoginPage = () => {
     <ThemeConsumer>
       {(theme) => (
         <ContainerMain>
-          <LoginComponent>
-            {isLoadingLogin ? (
-              <Spinner />
-            ) : (
-              <LoginComponent>
-                <Logo height={40} />
-                <FormContainer>
-                  <LoginInput
-                    autoFocus
-                    placeholder="Email address"
-                    setValue={(text: string) =>
-                      setLoginForm({ ...loginForm, email: text })
-                    }
-                    value={loginForm.email}
-                  />
-                  <LoginInput
-                    placeholder="Password"
-                    type="password"
-                    setValue={(text: string) =>
-                      setLoginForm({ ...loginForm, password: text })
-                    }
-                    value={loginForm.password}
-                  />
-                  {errorMessage && (
-                    <ErrorMessageTxt> Error: {errorMessage}</ErrorMessageTxt>
-                  )}
-                  <LoginInputButton
-                    type={"button"}
-                    value={"Login"}
-                    dark
-                    onClick={() => onSubmit()}
-                  />
-                </FormContainer>
-                <LinkTxt to={"/"}>
-                  Do not have account? Try to create one there.{" "}
-                </LinkTxt>
-              </LoginComponent>
-            )}
-          </LoginComponent>
+          {isLoadingLogin ? (
+            <Spinner />
+          ) : (
+            <LoginComponent>
+              <Logo height={40} />
+              <FormContainer>
+                <LoginInput
+                  autoFocus
+                  placeholder="Email address"
+                  setValue={(text: string) =>
+                    setLoginForm({ ...loginForm, email: text })
+                  }
+                  value={loginForm.email}
+                />
+                <LoginInput
+                  placeholder="Password"
+                  type="password"
+                  setValue={(text: string) =>
+                    setLoginForm({ ...loginForm, password: text })
+                  }
+                  value={loginForm.password}
+                />
+                {errorMessage && (
+                  <ErrorMessageTxt> Error: {errorMessage}</ErrorMessageTxt>
+                )}
+                <LoginInputButton
+                  type={"button"}
+                  value={"Login"}
+                  dark
+                  onClick={() => onSubmit()}
+                />
+              </FormContainer>
+              <LinkTxt to={"/"}>
+                Do not have account? Try to create one there.{" "}
+              </LinkTxt>
+            </LoginComponent>
+          )}
         </ContainerMain>
       )}
     </ThemeConsumer>
