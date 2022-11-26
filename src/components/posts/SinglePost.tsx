@@ -83,8 +83,8 @@ const SinglePost = ({
   };
   return (
     <SinglePostContainer>
-      <PostContext onClick={onClick}>
-        <img alt="randomimagetopost" src={image} />
+      <PostContext>
+        <img alt="randomimagetopost" src={image} onClick={onClick} />
         <PostParts>
           <AllIconContainer>
             <IconWithText>
