@@ -101,6 +101,12 @@ export const PostSlice = createSlice({
     setPhotos: (state, { payload }: PayloadAction<IPhoto[]>) => {
       state.photos = payload;
     },
+    deletePhoto: (state, { payload }: PayloadAction<number>) => {
+      const newPhotoState = state.photos?.filter(
+        (photo) => photo.id !== payload
+      );
+      if (newPhotoState) state.photos = newPhotoState;
+    },
     setAlbums: (state, { payload }: PayloadAction<IAlbum[]>) => {
       state.albums = payload;
     },
@@ -150,4 +156,5 @@ export const {
   addNewPost,
   setAlbums,
   setPhotos,
+  deletePhoto,
 } = PostSlice.actions;

@@ -5,23 +5,25 @@ import SingleImagePhotos from "./SingleImage";
 import { AllPostContainer } from "./SinglePost.styled";
 
 const SingleAlbumDisplay = ({ albumId }: { albumId: number }) => {
-  const [photos, setphotos] = useState<IPhoto[] | null>(null);
-  const data = useAppSelector((state) => state.Posts.photos);
+  const [photosstate, setphotosstate] = useState<IPhoto[] | null>(null);
+  const { photos, albums } = useAppSelector((state) => state.Posts);
+  const singleAlbum =
+    albums && albums.filter((album) => album.id === albumId)[0];
 
   useEffect(() => {
-    if (data) {
-      const filteredphotos = data.filter(
-        (photos) => photos.albumId === albumId
+    if (photos) {
+      const filteredphotos = photos.filter(
+        (photo) => photo.albumId === albumId
       );
-      setphotos(filteredphotos);
+      setphotosstate(filteredphotos);
     }
-  }, [data, albumId]);
+  }, [photos, albumId]);
 
   return (
     <AllPostContainer>
-      {photos &&
-        photos.map((photo) => (
-          <SingleImagePhotos key={photo.id} photo={photo} />
+      {photosstate &&
+        photosstate.map((photo) => (
+          <SingleImagePhotos key={photo.id} photo={photo} album={singleAlbum} />
         ))}
     </AllPostContainer>
   );

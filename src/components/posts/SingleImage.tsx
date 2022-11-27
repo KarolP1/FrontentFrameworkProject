@@ -1,15 +1,38 @@
 import React from "react";
-import { IPhoto } from "../../redux/api/types";
+import { IAlbum, IPhoto } from "../../redux/api/types";
 import styled from "styled-components";
+import { RiDeleteBin3Line } from "react-icons/ri";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { deletePhoto } from "../../redux/slices/Posts/Posts.slice";
 
 type Props = {
   photo: IPhoto;
+  album: IAlbum | null;
 };
 
-const SingleImagePhotos = ({ photo }: Props) => {
+const SingleImagePhotos = ({ photo, album }: Props) => {
+  const dispatch = useAppDispatch();
+  const deleteImage = () => {
+    dispatch(deletePhoto(photo.id));
+  };
+  const lggedInUser = useAppSelector((state) => state.Users.loggedInUser);
   return (
     <ImageContainer>
+      {lggedInUser?.id === album?.userId && (
+        <RiDeleteBin3Line
+          size={20}
+          style={{
+            position: "absolute",
+            top: 10,
+            right: 10,
+            cursor: "pointer",
+          }}
+          color={"#fff"}
+          onClick={deleteImage}
+        />
+      )}
       <img
+        alt="by user"
         src={`https://picsum.photos/id/${Math.floor(
           Math.random() * 100
         )}/3000/3000`}
@@ -31,6 +54,7 @@ export const ImageContainer = styled.div`
   -webkit-box-shadow: 0 2px 25px -4px rgba(0, 0, 0, 1);
   -moz-box-shadow: 0 2px 25px -4px rgba(0, 0, 0, 1);
   box-shadow: 0 2px 25px -4px rgba(0, 0, 0, 1);
+  position: relative;
 
   img {
     width: 100%;
