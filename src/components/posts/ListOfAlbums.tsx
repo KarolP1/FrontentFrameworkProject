@@ -44,7 +44,10 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
       <AllPostContainer>
         {albumsToDisplay?.map((album) => {
           return (
-            <Container key={album.id}>
+            <Container
+              key={album.id}
+              onClick={() => navigate(`/albums/view/${album.id}`)}
+            >
               <img
                 style={{ width: "100px", aspectRatio: 1 }}
                 src={albumIcon}
@@ -71,7 +74,8 @@ export const Container = styled.div`
   flex: 1;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  margin: 2rem;
+  cursor: pointer;
 `;
 
 export default ListOfPosts;

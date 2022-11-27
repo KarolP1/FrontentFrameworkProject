@@ -5,6 +5,7 @@ import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
 import {
   useGetAllAlbumsQuery,
   useGetAllCommentsQuery,
+  useGetAllPhotosQuery,
   useGetAllPostsQuery,
 } from "../../redux/api";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -12,15 +13,17 @@ import { setComments } from "../../redux/slices/Coments/Coments.slice";
 import {
   setAlbums,
   setImages,
+  setPhotos,
   setPosts,
 } from "../../redux/slices/Posts/Posts.slice";
 
 const Homepage = () => {
-  const { posts, albums } = useAppSelector((state) => state.Posts);
+  const { posts, albums, photos } = useAppSelector((state) => state.Posts);
   const coments = useAppSelector((state) => state.Comments.comment);
 
   const postResponse = useGetAllPostsQuery();
   const comentResponse = useGetAllCommentsQuery();
+  const photoResponse = useGetAllPhotosQuery();
 
   const dispatch = useAppDispatch();
 
@@ -57,6 +60,12 @@ const Homepage = () => {
       dispatch(setAlbums(albumResponse.data));
     }
   }, [albumResponse, albums, dispatch]);
+  useEffect(() => {
+    if (!photos && photoResponse.data) {
+      dispatch(setPhotos(photoResponse.data));
+    }
+  }, [photoResponse, photos, dispatch]);
+
   useEffect(() => {
     if (!posts && postResponse.data) {
       dispatch(setPosts(postResponse.data));

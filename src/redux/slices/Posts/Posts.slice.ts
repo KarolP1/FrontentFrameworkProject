@@ -1,4 +1,4 @@
-import { IAlbum, IPost } from "./../../api/types";
+import { IAlbum, IPhoto, IPost } from "./../../api/types";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -19,6 +19,7 @@ interface IIPostSlice {
   posts: IPost[] | null;
   albums: IAlbum[] | null;
   images: IImageState[] | null;
+  photos: IPhoto[] | null;
 }
 
 const initialState: IIPostSlice = {
@@ -27,6 +28,7 @@ const initialState: IIPostSlice = {
   posts: null,
   images: null,
   albums: null,
+  photos: null,
 };
 export const PostSlice = createSlice({
   name: "counter",
@@ -96,6 +98,9 @@ export const PostSlice = createSlice({
     setPosts: (state, { payload }: PayloadAction<IPost[]>) => {
       state.posts = payload;
     },
+    setPhotos: (state, { payload }: PayloadAction<IPhoto[]>) => {
+      state.photos = payload;
+    },
     setAlbums: (state, { payload }: PayloadAction<IAlbum[]>) => {
       state.albums = payload;
     },
@@ -144,4 +149,5 @@ export const {
   setNewImage,
   addNewPost,
   setAlbums,
+  setPhotos,
 } = PostSlice.actions;

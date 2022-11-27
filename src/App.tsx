@@ -10,6 +10,7 @@ import SingleImage from "./pages/authtrue/singleImage";
 import { setUser, setUsers } from "./redux/slices/Users/Users.slice";
 import { useGetUsersQuery } from "./redux/api";
 import AddNewPost from "./pages/authtrue/AddNewPost";
+import SingleAlbum from "./pages/authtrue/singleAlbum";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
@@ -47,7 +48,8 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/profile/:userName" element={<ProfilePage />} />
           <Route path="/image/view/:imageId" element={<SingleImage />} />
-          <Route path="/image/edit/:imageId" element={<ProfilePage />} />
+          <Route path="/albums/view/:albumId" element={<SingleAlbum />} />
+          {/* <Route path="/image/edit/:imageId" element={<ProfilePage />} /> */}
           <Route path="/image/post/" element={<AddNewPost />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
