@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const PostContainer = styled.div`
   display: flex;
   flex: 1;
-  width: 100%;
   margin: 5rem 10rem;
   background-color: ${(props) => props.theme.color.tint};
   border-radius: 1rem;

@@ -107,6 +107,12 @@ export const PostSlice = createSlice({
       );
       if (newPhotoState) state.photos = newPhotoState;
     },
+    addImageToAlbum: (
+      state,
+      { payload }: PayloadAction<{ albumId: number; id: number; title: string }>
+    ) => {
+      state.photos?.push({ ...payload, thumbnailUrl: "", url: "" });
+    },
     setAlbums: (state, { payload }: PayloadAction<IAlbum[]>) => {
       state.albums = payload;
     },
@@ -156,5 +162,6 @@ export const {
   addNewPost,
   setAlbums,
   setPhotos,
+  addImageToAlbum,
   deletePhoto,
 } = PostSlice.actions;

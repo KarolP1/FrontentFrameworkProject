@@ -10,7 +10,7 @@ export const MenuContainer = styled.div`
 export const MenuElement = styled.div<{ selected: boolean }>`
   width: 50%;
   background-color: #fff;
-  margin: 0 2rem;
+  margin: 1rem 2rem;
   padding: 1rem 2rem;
   text-align: center;
   border-radius: 1rem;

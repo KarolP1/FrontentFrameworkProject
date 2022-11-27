@@ -15,7 +15,7 @@ const ImageAlbumMenu = (props: Props) => {
           props.setisPostsOnDisplay(true);
         }}
       >
-        <p>All imagea</p>
+        <p>Posts</p>
       </MenuElement>
       <MenuElement
         selected={!props.isPostsOnDisplay}
@@ -23,7 +23,7 @@ const ImageAlbumMenu = (props: Props) => {
           props.setisPostsOnDisplay(false);
         }}
       >
-        <p>All albums</p>
+        <p>Albums</p>
       </MenuElement>
     </MenuContainer>
   );
