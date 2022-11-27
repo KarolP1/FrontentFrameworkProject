@@ -15,4 +15,5 @@ export const ScrollContainer = styled.div`
   overflow: scroll;
   height: 100%;
   display: flex;
+  flex-direction: column;
 `;

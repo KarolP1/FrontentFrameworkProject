@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ListOfPosts from "../../components/posts/ListOfPosts";
-import Spinner from "../../components/ui/loading";
+import ListOfAlbums from "../../components/posts/ListOfAlbums";
+import ImageAlbumMenu from "../../components/profile/ImageAlbumMenu";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
 import {
   useGetAllAlbumsQuery,
@@ -77,10 +78,16 @@ const Homepage = () => {
       dispatch(setComments(comentResponse.data));
     }
   }, [comentResponse, coments, dispatch]);
+  const [isPostsOnDisplay, setisPostsOnDisplay] = useState(true);
 
   return (
     <SignedInContainer>
-      {posts ? <ListOfPosts /> : <Spinner />}
+      <ImageAlbumMenu
+        setisPostsOnDisplay={setisPostsOnDisplay}
+        isPostsOnDisplay={isPostsOnDisplay}
+      />
+      {posts && isPostsOnDisplay && <ListOfPosts />}
+      {posts && !isPostsOnDisplay && <ListOfAlbums />}
     </SignedInContainer>
   );
 };

@@ -12,7 +12,7 @@ import { AllPostContainer } from "./SinglePost.styled";
 const ListOfPosts = ({ type }: { type?: "profile" }) => {
   const dispatch = useAppDispatch();
   const { userName } = useParams();
-  const users = useAppSelector((state) => state.Users.users);
+  const { users, loggedInUser } = useAppSelector((state) => state.Users);
 
   useEffect(() => {
     if (userName) {
@@ -43,6 +43,7 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
       {type !== "profile" && <SearchUser isMoblie={true} type={type} />}
       <AllPostContainer>
         {albumsToDisplay?.map((album) => {
+          const owner = users?.filter((user) => user.id === album.userId)[0];
           return (
             <Container
               key={album.id}
@@ -54,6 +55,11 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
                 alt="albumIcon"
               />
               <Title>{album.title}</Title>
+              <Title>
+                {owner?.id === loggedInUser?.id
+                  ? "Your folder"
+                  : owner?.username}
+              </Title>
             </Container>
           );
         })}
@@ -67,6 +73,7 @@ export const Title = styled.p`
   text-align: center;
   text-transform: capitalize;
   font-size: 1.2rem;
+  margin-top: 1rem;
 `;
 export const Container = styled.div`
   color: #fff;

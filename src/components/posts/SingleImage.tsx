@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { RiDeleteBin3Line } from "react-icons/ri";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { deletePhoto } from "../../redux/slices/Posts/Posts.slice";
+import { Link } from "react-router-dom";
 
 type Props = {
   photo: IPhoto;
@@ -37,6 +38,8 @@ const SingleImagePhotos = ({ photo, album }: Props) => {
           Math.random() * 100
         )}/3000/3000`}
       />
+      <Link to={`/albums/view/${album?.id}`}>{album?.title}</Link>
+
       <div>{photo.title}</div>
     </ImageContainer>
   );
@@ -55,6 +58,12 @@ export const ImageContainer = styled.div`
   -moz-box-shadow: 0 2px 25px -4px rgba(0, 0, 0, 1);
   box-shadow: 0 2px 25px -4px rgba(0, 0, 0, 1);
   position: relative;
+
+  Link {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: #fff;
+  }
 
   img {
     width: 100%;
