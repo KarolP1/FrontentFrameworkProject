@@ -38,7 +38,12 @@ const SingleImagePhotos = ({ photo, album }: Props) => {
           Math.random() * 100
         )}/3000/3000`}
       />
-      <Link to={`/albums/view/${album?.id}`}>{album?.title}</Link>
+      <Link
+        style={{ textDecoration: "none", color: "#44aaff", marginTop: "1rem" }}
+        to={`/albums/view/${album?.id}`}
+      >
+        {album?.title}
+      </Link>
 
       <div>{photo.title}</div>
     </ImageContainer>

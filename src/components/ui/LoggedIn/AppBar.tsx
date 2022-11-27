@@ -16,7 +16,7 @@ const AppBar = ({ type }: { type?: "Profile" }) => {
   const navigate = useNavigate();
   return (
     <AppbarContainer>
-      <Link to="/">
+      <Link to="/" style={{ textDecoration: "none " }}>
         <Logo height={30} align={"flex-start"} />
       </Link>
       <SearchUser type={type} />

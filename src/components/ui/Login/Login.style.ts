@@ -100,6 +100,7 @@ export const FormContainer = styled.div`
 export const LogoTitle = styled.h2<{ size?: number }>`
   font-size: 2rem;
   color: ${(props) => props.theme.color.tint};
+  text-decoration: none;
   @media (max-width: 1000px) {
     font-size: 5rem;
   }

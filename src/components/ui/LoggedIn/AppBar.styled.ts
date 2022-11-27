@@ -7,4 +7,5 @@ export const AppbarContainer = styled.div`
   box-shadow: ${(props) => `2px 2px 12px ${props.theme.color.darkTint}`};
   justify-content: space-between;
   align-items: center;
+  text-decoration: none;
 `;
