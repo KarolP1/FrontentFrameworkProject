@@ -31,6 +31,11 @@ export interface IPost {
   user?: IUser;
   coments?: IComent[];
 }
+export interface IAlbum {
+  userId: number;
+  id: number;
+  title: string;
+}
 
 export interface IComent {
   postId: number;

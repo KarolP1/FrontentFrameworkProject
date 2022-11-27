@@ -2,13 +2,21 @@ import { useEffect, useState } from "react";
 import ListOfPosts from "../../components/posts/ListOfPosts";
 import Spinner from "../../components/ui/loading";
 import SignedInContainer from "../../components/ui/LoggedIn/signedInContainer";
-import { useGetAllCommentsQuery, useGetAllPostsQuery } from "../../redux/api";
+import {
+  useGetAllAlbumsQuery,
+  useGetAllCommentsQuery,
+  useGetAllPostsQuery,
+} from "../../redux/api";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { setComments } from "../../redux/slices/Coments/Coments.slice";
-import { setImages, setPosts } from "../../redux/slices/Posts/Posts.slice";
+import {
+  setAlbums,
+  setImages,
+  setPosts,
+} from "../../redux/slices/Posts/Posts.slice";
 
 const Homepage = () => {
-  const posts = useAppSelector((state) => state.Posts.posts);
+  const { posts, albums } = useAppSelector((state) => state.Posts);
   const coments = useAppSelector((state) => state.Comments.comment);
 
   const postResponse = useGetAllPostsQuery();
@@ -36,12 +44,19 @@ const Homepage = () => {
     renderImagesArray().then((val) => setImagesState(val));
   }, []);
 
+  const albumResponse = useGetAllAlbumsQuery();
+
   useEffect(() => {
     if (imagesState && imagesState.length === 100) {
       dispatch(setImages(imagesState));
     }
   }, [imagesState, dispatch]);
 
+  useEffect(() => {
+    if (!albums && albumResponse.data) {
+      dispatch(setAlbums(albumResponse.data));
+    }
+  }, [albumResponse, albums, dispatch]);
   useEffect(() => {
     if (!posts && postResponse.data) {
       dispatch(setPosts(postResponse.data));

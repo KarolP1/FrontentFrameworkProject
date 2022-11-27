@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IComent, IPost, IPostNewComent, IUser } from "./types";
-
+import { IAlbum, IComent, IPost, IPostNewComent, IUser } from "./types";
+// jsonplaceholder.typicode.com/albums
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -12,6 +12,9 @@ export const userApi = createApi({
     }),
     getAllPosts: builder.query<IPost[], void>({
       query: () => `/posts/`,
+    }),
+    getAllAlbums: builder.query<IAlbum[], void>({
+      query: () => `/albums/`,
     }),
     getAllComments: builder.query<IComent[], void>({
       query: () => `/comments/`,
@@ -44,6 +47,7 @@ export const {
   useGetUsersQuery,
   useGetAllPostsQuery,
   useGetAllCommentsQuery,
+  useGetAllAlbumsQuery,
   useCreateComentMutation,
   useCreatePostMutation,
 } = userApi;

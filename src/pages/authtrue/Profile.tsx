@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ListOfAlbums from "../../components/posts/ListOfAlbums";
 import ListOfPosts from "../../components/posts/ListOfPosts";
 import ImageAlbumMenu from "../../components/profile/ImageAlbumMenu";
 import UserProfileSection from "../../components/profile/UserProfileSection";
@@ -56,7 +57,7 @@ const ProfilePage = () => {
               <ListOfPosts type={"profile"} />
             ) : (
               //
-              <div>list of albums</div>
+              <ListOfAlbums type={"profile"} />
             )}
           </div>
         )}

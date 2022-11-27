@@ -1,14 +1,12 @@
 import React from "react";
+import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IPost } from "../../redux/api/types";
+import { IAlbum } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  setPostLikes,
-  setUserQueryId,
-} from "../../redux/slices/Posts/Posts.slice";
+import albumIcon from "../../assets/icons/album.svg";
+import { setUserQueryId } from "../../redux/slices/Posts/Posts.slice";
 import SearchUser from "../ui/LoggedIn/SearchUser";
-import SinglePost from "./SinglePost";
 import { AllPostContainer } from "./SinglePost.styled";
 
 const ListOfPosts = ({ type }: { type?: "profile" }) => {
@@ -24,49 +22,56 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
     }
   }, [userName, dispatch, users]);
 
-  const [postToDisplay, setPostToDisplay] = useState<null | IPost[]>(null);
-  const { posts, UserQueryId, numberOfLikes } = useAppSelector(
-    (state) => state.Posts
-  );
+  const [albumsToDisplay, setAlbumsToDisplay] = useState<null | IAlbum[]>(null);
+  const { albums, UserQueryId } = useAppSelector((state) => state.Posts);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const postLikes = posts?.map((post) => {
-      return { postId: post.id, numberOfLikes: Math.random() * 1000 };
-    });
-    if (!numberOfLikes && postLikes) dispatch(setPostLikes(postLikes));
-  }, [posts, dispatch, numberOfLikes]);
-
-  useEffect(() => {
     if (UserQueryId) {
-      const filteredPosts = posts?.filter(
+      const filteredAlbums = albums?.filter(
         (post) => post.userId === UserQueryId
       );
-      if (filteredPosts) setPostToDisplay(filteredPosts);
+      if (filteredAlbums) setAlbumsToDisplay(filteredAlbums);
     } else {
-      setPostToDisplay(posts);
+      setAlbumsToDisplay(albums);
     }
-  }, [UserQueryId, posts]);
+  }, [UserQueryId, albums]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {type !== "profile" && <SearchUser isMoblie={true} type={type} />}
       <AllPostContainer>
-        {postToDisplay?.map((post) => {
+        {albumsToDisplay?.map((album) => {
           return (
-            <SinglePost
-              post={post}
-              key={post.id}
-              onClick={() => {
-                navigate(`/image/view/${post.id}`);
-              }}
-            />
+            <Container key={album.id}>
+              <img
+                style={{ width: "100px", aspectRatio: 1 }}
+                src={albumIcon}
+                alt="albumIcon"
+              />
+              <Title>{album.title}</Title>
+            </Container>
           );
         })}
       </AllPostContainer>
     </div>
   );
 };
+
+export const Title = styled.p`
+  color: #fff;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 1.2rem;
+`;
+export const Container = styled.div`
+  color: #fff;
+  text-align: center;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+`;
 
 export default ListOfPosts;
