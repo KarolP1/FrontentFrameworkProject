@@ -1,4 +1,3 @@
-import { rejects } from "assert";
 import { useState } from "react";
 import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
