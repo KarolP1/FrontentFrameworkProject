@@ -32,6 +32,7 @@ const SingleImagePhotos = ({ photo, album }: Props) => {
           onClick={deleteImage}
         />
       )}
+      
       <img
         alt="by user"
         src={`https://picsum.photos/id/${Math.floor(

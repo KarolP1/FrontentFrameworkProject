@@ -14,6 +14,7 @@ import SingleAlbum from "./pages/authtrue/singleAlbum";
 
 function App() {
   const { isLoggedIn } = useAppSelector((state) => state.login);
+
   const dispatch = useAppDispatch();
   const loginState = sessionStorage.getItem("loggedInId");
   const users = useGetUsersQuery();

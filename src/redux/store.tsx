@@ -7,7 +7,7 @@ import { UserSlice } from "./slices/Users/Users.slice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   login: loginSlice,
   Posts: PostSlice.reducer,
   Users: UserSlice.reducer,
@@ -24,6 +24,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   devTools: process.env.NODE_ENV !== "production",
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({
+      serializableCheck: false,
+      immutableCheck: false,
+    }),
+  ],
 });
 
 export const persistor = persistStore(store);

@@ -1,3 +1,4 @@
+import { rejects } from "assert";
 import { useState } from "react";
 import { ThemeConsumer } from "styled-components";
 import PhotoIcon from "../../assets/icons/photoIcon";
@@ -14,6 +15,7 @@ import {
   LoginInput,
   LoginInputButton,
 } from "../../components/ui/Login/LoginComponent";
+import { IUser } from "../../redux/api/types";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { login, setLoggedInUser } from "../../redux/slices/login.slice";
 import { ContainerMain } from "./LoginPage.styles";
@@ -23,9 +25,45 @@ export interface IUserWithImage {
   image: string;
 }
 
+export const onLoginSubmit = async ({
+  allUsersData,
+  setErrorMessage,
+  loginForm,
+  next,
+}: {
+  allUsersData: IUser[];
+  setErrorMessage: () => void;
+  loginForm: {
+    email: string;
+    password: string;
+  };
+  next: () => void;
+}): Promise<IUser | null> => {
+  return new Promise<IUser | null>((resolve) => {
+    setTimeout(() => {
+      const listOfMails = allUsersData?.map((user) => user.email);
+      const inputUser = listOfMails?.filter((mail) => mail === loginForm.email);
+
+      if (inputUser?.length === 0) {
+        setErrorMessage();
+        resolve(null);
+      } else {
+        const returnUser = allUsersData.find(
+          (user) => user.email === loginForm.email
+        );
+        next();
+        if (returnUser) resolve(returnUser);
+        else {
+          resolve(null);
+        }
+      }
+    }, 1000);
+  });
+};
+
 const LoginPage = () => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.Users.users);
+  const allUsersData = useAppSelector((state) => state.Users.users);
   const [loginForm, setLoginForm] = useState<{
     email: string;
     password: string;
@@ -34,35 +72,10 @@ const LoginPage = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
 
-  const onSubmit = () => {
-    setErrorMessage(null);
-    setIsLoadingLogin(true);
-    setTimeout(() => {
-      const lsitOfMails = data?.map((user) => user.email);
-      const inputUser = lsitOfMails?.filter((mail) => mail === loginForm.email);
-      if (inputUser?.length === 0) {
-        setErrorMessage("User not found");
-      } else {
-        const loggedInUser = data?.filter((user) => {
-          if (user.email === loginForm.email) {
-            sessionStorage.setItem("loggedInId", user.id.toString());
-            return user;
-          }
-          return null;
-        })[0];
-        dispatch(login());
-        if (loggedInUser) {
-          dispatch(setLoggedInUser(loggedInUser?.id));
-        }
-      }
-      setIsLoadingLogin(false);
-    }, 1000);
-  };
-
   return (
     <ThemeConsumer>
       {(theme) => (
-        <ContainerMain>
+        <ContainerMain data-testid="loginpage">
           {isLoadingLogin ? (
             <Spinner />
           ) : (
@@ -92,7 +105,38 @@ const LoginPage = () => {
                   type={"button"}
                   value={"Login"}
                   dark
-                  onClick={() => onSubmit()}
+                  onClick={async () => {
+                    //
+                    if (allUsersData) {
+                      setErrorMessage(null);
+                      setIsLoadingLogin(true);
+                      const test = await onLoginSubmit({
+                        allUsersData,
+                        setErrorMessage: () =>
+                          setErrorMessage("User not found"),
+                        next: () => {
+                          const loggedInUser = allUsersData?.filter((user) => {
+                            if (user.email === loginForm.email) {
+                              sessionStorage.setItem(
+                                "loggedInId",
+                                user.id.toString()
+                              );
+                              return user;
+                            }
+                            return null;
+                          })[0];
+                          dispatch(login());
+                          if (loggedInUser) {
+                            dispatch(setLoggedInUser(loggedInUser?.id));
+                          }
+                        },
+                        loginForm,
+                      });
+                      console.log(test);
+
+                      setIsLoadingLogin(false);
+                    }
+                  }}
                 />
               </FormContainer>
               <LinkTxt to={"/"}>

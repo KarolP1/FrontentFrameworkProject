@@ -53,6 +53,7 @@ const ListOfPosts = ({ type }: { type?: "profile" }) => {
                 style={{ width: "100px", aspectRatio: 1 }}
                 src={albumIcon}
                 alt="albumIcon"
+                onLoadStart={() => {}}
               />
               <Title>{album.title}</Title>
               <Title>

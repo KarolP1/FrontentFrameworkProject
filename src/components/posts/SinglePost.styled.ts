@@ -8,9 +8,10 @@ export const SinglePostContainer = styled.div`
   height: 100%;
   position: relative;
   padding-bottom: 2rem;
+  height: 50rem;
 `;
 
-export const PostContext = styled.div`
+export const PostContext = styled.div<{ isImageLoaded?: boolean }>`
   max-width: 500px;
   display: flex;
   flex-direction: column;
@@ -22,8 +23,15 @@ export const PostContext = styled.div`
     width: 100%;
     aspect-ratio: 1;
     cursor: pointer;
+    height: 40rem;
   }
   height: 100%;
+`;
+export const LoadingImage = styled.img<{ isImageLoaded?: boolean }>`
+  visibility: ${(props) => (!props.isImageLoaded ? "visible" : "collapse")};
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 4rem;
 `;
 
 export const AllPostContainer = styled.div`

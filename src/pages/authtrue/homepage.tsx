@@ -74,6 +74,8 @@ const Homepage = () => {
   }, [postResponse, posts, dispatch]);
 
   useEffect(() => {
+    console.log({ comentResponse: comentResponse.data });
+
     if (!coments && comentResponse.data) {
       dispatch(setComments(comentResponse.data));
     }
@@ -81,7 +83,7 @@ const Homepage = () => {
   const [isPostsOnDisplay, setisPostsOnDisplay] = useState(true);
 
   return (
-    <SignedInContainer>
+    <SignedInContainer data-testid="homepage-login">
       <ImageAlbumMenu
         setisPostsOnDisplay={setisPostsOnDisplay}
         isPostsOnDisplay={isPostsOnDisplay}

@@ -17,8 +17,16 @@ import {
   PostUserLink,
   IconMoreOptions,
   MoreIconsDisplay,
+  LoadingImage,
 } from "./SinglePost.styled";
 import comentIcon from "../../assets/icons/message.svg";
+
+export const DeleteAction = (postId: number, posts: IPost[]) => {
+  if (posts) {
+    const filteredPosts = posts.filter((post) => postId !== post.id);
+    return filteredPosts;
+  } else return null;
+};
 
 const SinglePost = ({
   post,
@@ -75,16 +83,24 @@ const SinglePost = ({
     else setIsLiked(false);
   }, [idsOfLikedPosts, post.id]);
 
-  const DeleteAction = (postId: number) => {
-    if (posts) {
-      const filteredPosts = posts.filter((post) => postId !== post.id);
-      dispatch(setPosts(filteredPosts));
-    }
-  };
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const test = require("../../assets/icons/impatient.png");
   return (
     <SinglePostContainer>
       <PostContext>
-        <img alt="randomimagetopost" src={image} onClick={onClick} />
+        <LoadingImage
+          isImageLoaded={isImageLoaded}
+          className="image thumb"
+          alt="randomimagetopost"
+          src={test}
+          style={{ display: !isImageLoaded ? "flex" : "gone" }}
+        />
+        <img
+          alt="randomimagetopost"
+          src={image}
+          onClick={onClick}
+          onLoad={() => setIsImageLoaded(true)}
+        />
         <PostParts>
           <AllIconContainer>
             <IconWithText>
@@ -154,7 +170,15 @@ const SinglePost = ({
               <BsThreeDotsVertical color="#fff" size={20} />
             </IconMoreOptions>
             <MoreIconsDisplay active={animatedBool}>
-              <div onClick={() => DeleteAction(post.id)}>
+              <div
+                onClick={() => {
+                  if (posts) {
+                    const afterdelete = DeleteAction(post.id, posts);
+                    if (afterdelete) dispatch(setPosts(afterdelete));
+                    else alert("something went wrong when deleting post");
+                  }
+                }}
+              >
                 <RiDeleteBin3Line color="#fff" size={20} />
               </div>
               <div>

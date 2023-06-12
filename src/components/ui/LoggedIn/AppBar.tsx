@@ -23,7 +23,6 @@ const AppBar = ({ type }: { type?: "Profile" }) => {
       <ThemeConsumer>
         {(theme) => (
           <div style={{ display: "flex", flexDirection: "row" }}>
-            <div>{loggedInUser?.id}</div>
             <Link to={`/image/post/`}>
               <BiPlusCircle
                 className="icon"

@@ -7,7 +7,7 @@ export interface IImageState {
   image: string;
 }
 
-interface IIPostSlice {
+export interface IIPostSlice {
   idsOfLikedPosts: number[] | null;
   numberOfLikes:
     | {
@@ -150,6 +150,9 @@ export const PostSlice = createSlice({
     },
   },
 });
+
+export const PostReducer = PostSlice.reducer;
+export const PostInitialState = initialState;
 
 export const {
   increment,
